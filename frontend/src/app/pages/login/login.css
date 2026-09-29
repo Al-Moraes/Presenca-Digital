@@ -12,12 +12,12 @@
 
 /* Cartão central */
 .login-card {
-  background-color: #ffffff;
+  background-color: transparent;
   border-radius: 12px;
   padding: 40px 32px;
   width: 100%;
   max-width: 360px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   align-items: center;
