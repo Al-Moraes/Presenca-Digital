@@ -1,1 +1,43 @@
-<h1>HELLO WORLD!</h1>
+<div class="login-container">
+  <div class="login-card">
+    
+    <!-- Logótipo -->
+    <div class="logo-container">
+      <img class="logo" src="/presenca.png" alt="Presenca Digital"  />
+    </div>
+
+    <!-- Cabeçalho -->
+    <h1 class="title">Bem-Vindo!</h1>
+    <p class="subtitle">Acesse sua conta.</p>
+
+    <!-- Formulário -->
+    <form class="login-form">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input 
+          type="email" 
+          id="email" 
+          placeholder="Insira seu E-mail" 
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input 
+          type="password" 
+          id="password" 
+          placeholder="Digite sua senha" 
+        />
+      </div>
+
+      <a href="#" class="forgot-password">Esqueci minha senha</a>
+
+      <!-- Botões de Ação -->
+      <div class="actions">
+        <button type="button" class="btn-primary" routerLink="/home">Entrar</button>
+        <button type="button" class="btn-secondary">Criar Conta</button> <!-- Criar Página de Criar Conta beeeeem depois -->
+      </div>
+    </form>
+
+  </div>
+</div>

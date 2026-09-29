@@ -4,12 +4,12 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () =>
-            import('./pages/home/home').then((m) => m.Home),
+            import('./pages/login/login').then((m) => m.Login),
     },
     {
-        path: 'login',
+        path: 'home',
         loadComponent: () =>
-            import('./pages/login/login').then((m) => m.Login),
+            import('./pages/home/home').then((m) => m.Home),
     },
     {
         path: '**',
