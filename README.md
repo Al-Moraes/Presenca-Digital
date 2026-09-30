@@ -193,4 +193,4 @@ Novas funcionalidades e melhorias poderão ser adicionadas ao longo do desenvolv
 
 📄 Licença
 
-Este projeto foi desenvolvido para fins educacionais e acadêmicos.
+Este projeto foi desenvolvido para fins educacionais e acadêmicos. 
