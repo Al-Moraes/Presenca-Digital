@@ -144,3 +144,15 @@
 .btn-secondary:hover {
   background-color: #f0f4ff;
 }
+.link-cadastro {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.link-cadastro:hover {
+  text-decoration: underline;
+}
