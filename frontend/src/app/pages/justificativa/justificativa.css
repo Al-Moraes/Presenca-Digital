@@ -75,10 +75,76 @@ select {
   font-size: 16px;
   outline: none;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 select:focus {
   border-color: #2764b8;
+}
+
+
+/* OUTRA JUSTIFICATIVA */
+
+.outra-justificativa {
+  margin-top: -15px;
+  margin-bottom: 30px;
+}
+
+.outra-justificativa label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #263b5a;
+}
+
+.campo-outro {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.campo-outro input {
+  flex: 1;
+  height: 52px;
+  padding: 0 15px;
+  border: 1px solid #cfd4dc;
+  border-radius: 4px;
+  background: #fff;
+  color: #555;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.campo-outro input::placeholder {
+  color: #999;
+}
+
+.campo-outro input:focus {
+  border-color: #2764b8;
+}
+
+
+/* BOTÃO ADICIONAR */
+
+.btn-adicionar {
+  height: 52px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 4px;
+  background: #2764b8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.btn-adicionar:hover {
+  background: #1d4f91;
 }
 
 
@@ -155,6 +221,7 @@ input[type="date"]:focus {
   color: #2764b8;
   font-size: 14px;
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .btn-anexar:hover {
@@ -207,6 +274,10 @@ input[type="date"]:focus {
   color: #d9534f;
   font-size: 20px;
   cursor: pointer;
+}
+
+.btn-remover:hover {
+  color: #b52b27;
 }
 
 
@@ -291,5 +362,18 @@ textarea:focus {
 
   .area-upload {
     min-height: 220px;
+  }
+
+  /* Campo "Outros" no celular */
+  .campo-outro {
+    flex-direction: column;
+  }
+
+  .campo-outro input {
+    width: 100%;
+  }
+
+  .btn-adicionar {
+    width: 100%;
   }
 }

@@ -2,7 +2,12 @@
 
   <!-- Cabeçalho -->
   <div class="cabecalho">
-    <button class="btn-voltar" type="button">
+    <button
+      class="btn-voltar"
+      type="button"
+      (click)="voltarInicio()"
+      aria-label="Voltar para o início"
+      title="Voltar para o início">
       ←
     </button>
 
@@ -17,7 +22,8 @@
 
       <select
         id="tipo"
-        [(ngModel)]="tipoJustificativa">
+        [(ngModel)]="tipoJustificativa"
+        (change)="selecionarOutro()">
 
         <option value="" disabled>
           Selecione o tipo
@@ -28,12 +34,35 @@
           [value]="tipo">
           {{ tipo }}
         </option>
-
       </select>
     </div>
 
+    <!-- Campo que aparece ao selecionar "Outros" -->
+    <div
+      class="outra-justificativa"
+      *ngIf="tipoJustificativa === 'Outros'">
 
-    <!-- Data -->
+      <label for="outraJustificativa">
+        Qual é a justificativa?
+      </label>
+
+      <div class="campo-outro">
+        <input
+          id="outraJustificativa"
+          type="text"
+          [(ngModel)]="outraJustificativa"
+          placeholder="Digite sua justificativa">
+
+        <button
+          type="button"
+          class="btn-adicionar"
+          (click)="adicionarOutraJustificativa()">
+          Adicionar
+        </button>
+      </div>
+    </div>
+
+    <!-- Data da falta -->
     <div class="campo">
       <label for="data">Data da Falta</label>
 
@@ -45,10 +74,9 @@
       </div>
     </div>
 
-
     <!-- Documento -->
     <div class="campo">
-      <label>Documento</label>
+      <label for="arquivo">Documento</label>
 
       <div
         class="area-upload"
@@ -56,24 +84,21 @@
 
         <input
           #arquivoInput
+          id="arquivo"
           type="file"
           accept=".pdf,.jpg,.jpeg,.png"
           (change)="selecionarArquivo($event)"
           hidden>
 
+        <!-- Quando nenhum arquivo foi selecionado -->
         <ng-container *ngIf="!arquivoSelecionado">
-
-          <div class="icone-upload">
-            📄
-          </div>
+          <div class="icone-upload">📄</div>
 
           <p>
             Clique para anexar ou arraste o arquivo aqui
           </p>
 
-          <span>
-            PDF, JPG ou PNG até 10 MB
-          </span>
+          <span>PDF, JPG ou PNG até 10 MB</span>
 
           <button
             type="button"
@@ -81,18 +106,12 @@
             (click)="arquivoInput.click()">
             Selecionar arquivo
           </button>
-
         </ng-container>
 
-
-        <!-- Arquivo selecionado -->
+        <!-- Quando existe um arquivo -->
         <ng-container *ngIf="arquivoSelecionado">
-
           <div class="arquivo-info">
-
-            <div class="icone-arquivo">
-              📎
-            </div>
+            <div class="icone-arquivo">📎</div>
 
             <div class="dados-arquivo">
               <strong>{{ nomeArquivo }}</strong>
@@ -105,22 +124,20 @@
             <button
               type="button"
               class="btn-remover"
-              (click)="removerArquivo()">
+              (click)="removerArquivo()"
+              aria-label="Remover arquivo">
               ✕
             </button>
-
           </div>
-
         </ng-container>
-
       </div>
     </div>
-
 
     <!-- Observações -->
     <div class="campo">
       <label for="observacoes">
-        Observações <span>(opcional)</span>
+        Observações
+        <span>(opcional)</span>
       </label>
 
       <textarea
@@ -130,37 +147,27 @@
       </textarea>
     </div>
 
-
     <!-- Mensagem de erro -->
     <div
       class="mensagem erro"
       *ngIf="mensagemErro">
-
       ⚠ {{ mensagemErro }}
-
     </div>
-
 
     <!-- Mensagem de sucesso -->
     <div
       class="mensagem sucesso"
       *ngIf="mensagemSucesso">
-
       ✓ {{ mensagemSucesso }}
-
     </div>
 
-
-    <!-- Botão -->
+    <!-- Enviar -->
     <button
       type="button"
       class="btn-enviar"
       (click)="enviarJustificativa()">
-
       Enviar Justificativa
-
     </button>
 
   </div>
-
 </div>

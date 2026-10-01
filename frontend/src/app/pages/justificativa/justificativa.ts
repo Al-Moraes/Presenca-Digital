@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-justificativa',
@@ -11,17 +12,26 @@ import { FormsModule } from '@angular/forms';
 })
 export class Justificativa {
 
+  constructor(private router: Router) {}
+
+  // Voltar para o início do sistema
+  voltarInicio(): void {
+    this.router.navigate(['/']);
+  }
+
   tiposJustificativa = [
     'Atestado Médico',
     'Compromisso Familiar',
     'Projeto Fora da Escola',
     'Aulas Extra Curriculares',
-    'Perda de ônibus',
-    'Greve de motorista',
-    'Falecimento de Parente'
+    'Greve de Ônibus',
+    'Perda do Ônibus',
+    'Falecimento de Parente',
+    'Outros'
   ];
 
   tipoJustificativa = '';
+  outraJustificativa = '';
   dataFalta = '';
   observacoes = '';
 
@@ -30,6 +40,41 @@ export class Justificativa {
 
   mensagemErro = '';
   mensagemSucesso = '';
+
+  selecionarOutro(): void {
+    this.mensagemErro = '';
+    this.outraJustificativa = '';
+  }
+
+  adicionarOutraJustificativa(): void {
+    const justificativa = this.outraJustificativa.trim();
+
+    if (!justificativa) {
+      this.mensagemErro =
+        'Digite uma justificativa antes de adicionar.';
+      return;
+    }
+
+    const jaExiste = this.tiposJustificativa.some(
+      tipo => tipo.toLowerCase() === justificativa.toLowerCase()
+    );
+
+    if (jaExiste) {
+      this.mensagemErro =
+        'Essa justificativa já está cadastrada.';
+      return;
+    }
+
+    this.tiposJustificativa.splice(
+      this.tiposJustificativa.length - 1,
+      0,
+      justificativa
+    );
+
+    this.tipoJustificativa = justificativa;
+    this.outraJustificativa = '';
+    this.mensagemErro = '';
+  }
 
   selecionarArquivo(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -47,18 +92,16 @@ export class Justificativa {
     ];
 
     if (!tiposPermitidos.includes(arquivo.type)) {
-      this.mensagemErro = 'Formato inválido. Envie um arquivo PDF, JPG ou PNG.';
-      this.arquivoSelecionado = null;
-      this.nomeArquivo = '';
+      this.mensagemErro =
+        'Formato inválido. Envie um arquivo PDF, JPG ou PNG.';
+      input.value = '';
       return;
     }
 
-    const tamanhoMaximo = 10 * 1024 * 1024;
-
-    if (arquivo.size > tamanhoMaximo) {
-      this.mensagemErro = 'O arquivo não pode ter mais de 10 MB.';
-      this.arquivoSelecionado = null;
-      this.nomeArquivo = '';
+    if (arquivo.size > 10 * 1024 * 1024) {
+      this.mensagemErro =
+        'O arquivo não pode ter mais de 10 MB.';
+      input.value = '';
       return;
     }
 
@@ -77,30 +120,32 @@ export class Justificativa {
     this.mensagemSucesso = '';
 
     if (!this.tipoJustificativa) {
-      this.mensagemErro = 'Selecione o tipo de justificativa.';
+      this.mensagemErro =
+        'Selecione o tipo de justificativa.';
       return;
     }
 
     if (!this.dataFalta) {
-      this.mensagemErro = 'Selecione a data da falta.';
+      this.mensagemErro =
+        'Selecione a data da falta.';
       return;
     }
 
     if (!this.arquivoSelecionado) {
-      this.mensagemErro = 'Anexe um documento para continuar.';
+      this.mensagemErro =
+        'Anexe um documento para continuar.';
       return;
     }
 
-    const dados = {
+    console.log({
       tipo: this.tipoJustificativa,
       data: this.dataFalta,
-      observacoes: this.observacoes,
-      arquivo: this.arquivoSelecionado
-    };
+      arquivo: this.arquivoSelecionado,
+      observacoes: this.observacoes
+    });
 
-    console.log('Justificativa enviada:', dados);
-
-    this.mensagemSucesso = 'Justificativa enviada com sucesso!';
+    this.mensagemSucesso =
+      'Justificativa enviada com sucesso!';
 
     this.tipoJustificativa = '';
     this.dataFalta = '';
