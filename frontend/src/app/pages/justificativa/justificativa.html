@@ -1,173 +1,236 @@
-<div class="pagina">
+<div class="app-layout">
 
-  <!-- Cabeçalho -->
-  <div class="cabecalho">
-    <button
-      class="btn-voltar"
-      type="button"
-      (click)="voltarInicio()"
-      aria-label="Voltar para o início"
-      title="Voltar para o início">
-      ←
-    </button>
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
 
-    <h1>Nova Justificativa</h1>
-  </div>
-
-  <div class="conteudo">
-
-    <!-- Tipo de justificativa -->
-    <div class="campo">
-      <label for="tipo">Tipo de Justificativa</label>
-
-      <select
-        id="tipo"
-        [(ngModel)]="tipoJustificativa"
-        (change)="selecionarOutro()">
-
-        <option value="" disabled>
-          Selecione o tipo
-        </option>
-
-        <option
-          *ngFor="let tipo of tiposJustificativa"
-          [value]="tipo">
-          {{ tipo }}
-        </option>
-      </select>
+    <div class="sidebar-header">
+      <img
+        class="logo-placeholder"
+        src="/presenca-digital.png.png"
+        alt="Logo Presença Digital">
     </div>
 
-    <!-- Campo que aparece ao selecionar "Outros" -->
-    <div
-      class="outra-justificativa"
-      *ngIf="tipoJustificativa === 'Outros'">
+    <nav class="sidebar-nav">
 
-      <label for="outraJustificativa">
-        Qual é a justificativa?
-      </label>
+      <a class="nav-item"
+         routerLink="/home"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">
+        <svg class="nav-icon" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span>Início</span>
+      </a>
 
-      <div class="campo-outro">
-        <input
-          id="outraJustificativa"
-          type="text"
-          [(ngModel)]="outraJustificativa"
-          placeholder="Digite sua justificativa">
+      <a class="nav-item"
+         routerLink="/justificativa"
+         routerLinkActive="active">
+        <svg class="nav-icon" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="16"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+        <span>Nova Justificativa</span>
+      </a>
 
-        <button
-          type="button"
-          class="btn-adicionar"
-          (click)="adicionarOutraJustificativa()">
-          Adicionar
-        </button>
+      <a class="nav-item"
+         routerLink="/solicitacoes"
+         routerLinkActive="active">
+        <svg class="nav-icon" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="8" y1="13" x2="16" y2="13"/>
+          <line x1="8" y1="17" x2="16" y2="17"/>
+        </svg>
+        <span>Solicitações</span>
+      </a>
+
+      <a class="nav-item"
+         routerLink="/relatorio"
+         routerLinkActive="active">
+        <svg class="nav-icon" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>Histórico</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <a class="nav-item logout" routerLink="/login">
+        <svg class="nav-icon" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        <span>Sair</span>
+      </a>
+    </div>
+
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="main-content">
+
+    <div class="pagina">
+
+      <!-- CABEÇALHO SEM A SETA -->
+      <div class="cabecalho">
+        <h1>Nova Justificativa</h1>
       </div>
-    </div>
 
-    <!-- Data da falta -->
-    <div class="campo">
-      <label for="data">Data da Falta</label>
+      <!-- FORMULÁRIO -->
+      <div class="conteudo">
 
-      <div class="campo-data">
-        <input
-          id="data"
-          type="date"
-          [(ngModel)]="dataFalta">
-      </div>
-    </div>
+        <div class="campo">
+          <label for="tipo">Tipo de Justificativa</label>
 
-    <!-- Documento -->
-    <div class="campo">
-      <label for="arquivo">Documento</label>
+          <select
+            id="tipo"
+            [(ngModel)]="tipoJustificativa"
+            (change)="selecionarOutro()">
 
-      <div
-        class="area-upload"
-        [class.arquivo-adicionado]="arquivoSelecionado">
+            <option value="" disabled>Selecione o tipo</option>
 
-        <input
-          #arquivoInput
-          id="arquivo"
-          type="file"
-          accept=".pdf,.jpg,.jpeg,.png"
-          (change)="selecionarArquivo($event)"
-          hidden>
+            <option
+              *ngFor="let tipo of tiposJustificativa"
+              [value]="tipo">
+              {{ tipo }}
+            </option>
 
-        <!-- Quando nenhum arquivo foi selecionado -->
-        <ng-container *ngIf="!arquivoSelecionado">
-          <div class="icone-upload">📄</div>
+          </select>
+        </div>
 
-          <p>
-            Clique para anexar ou arraste o arquivo aqui
-          </p>
+        <!-- OUTRA JUSTIFICATIVA -->
+        <div class="campo"
+             *ngIf="tipoJustificativa === 'Outros'">
 
-          <span>PDF, JPG ou PNG até 10 MB</span>
+          <label for="outraJustificativa">
+            Qual é a justificativa?
+          </label>
 
-          <button
-            type="button"
-            class="btn-anexar"
-            (click)="arquivoInput.click()">
-            Selecionar arquivo
-          </button>
-        </ng-container>
-
-        <!-- Quando existe um arquivo -->
-        <ng-container *ngIf="arquivoSelecionado">
-          <div class="arquivo-info">
-            <div class="icone-arquivo">📎</div>
-
-            <div class="dados-arquivo">
-              <strong>{{ nomeArquivo }}</strong>
-
-              <span>
-                {{ (arquivoSelecionado.size / 1024 / 1024).toFixed(2) }} MB
-              </span>
-            </div>
+          <div class="campo-outro">
+            <input
+              id="outraJustificativa"
+              type="text"
+              [(ngModel)]="outraJustificativa"
+              placeholder="Digite sua justificativa">
 
             <button
               type="button"
-              class="btn-remover"
-              (click)="removerArquivo()"
-              aria-label="Remover arquivo">
-              ✕
+              class="btn-adicionar"
+              (click)="adicionarOutraJustificativa()">
+              Adicionar
             </button>
           </div>
-        </ng-container>
+        </div>
+
+        <!-- DATA DA FALTA -->
+        <div class="campo">
+          <label for="data">Data da Falta</label>
+
+          <div class="campo-data">
+            <input
+              id="data"
+              type="date"
+              [(ngModel)]="dataFalta">
+          </div>
+        </div>
+
+        <!-- DOCUMENTO -->
+        <div class="campo">
+          <label for="arquivo">Documento</label>
+
+          <div class="area-upload"
+               [class.arquivo-adicionado]="arquivoSelecionado">
+
+            <input
+              #arquivoInput
+              id="arquivo"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              (change)="selecionarArquivo($event)"
+              hidden>
+
+            <ng-container *ngIf="!arquivoSelecionado">
+              <div class="icone-upload">📄</div>
+
+              <p>Clique para anexar ou arraste o arquivo aqui</p>
+              <span>PDF, JPG ou PNG até 10 MB</span>
+
+              <button
+                type="button"
+                class="btn-anexar"
+                (click)="arquivoInput.click()">
+                Selecionar arquivo
+              </button>
+            </ng-container>
+
+            <ng-container *ngIf="arquivoSelecionado">
+              <div class="arquivo-info">
+                <div class="icone-arquivo">📎</div>
+
+                <div class="dados-arquivo">
+                  <strong>{{ nomeArquivo }}</strong>
+                  <span>
+                    {{ (arquivoSelecionado.size / 1024 / 1024).toFixed(2) }} MB
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn-remover"
+                  (click)="removerArquivo()"
+                  aria-label="Remover arquivo">
+                  ✕
+                </button>
+              </div>
+            </ng-container>
+
+          </div>
+        </div>
+
+        <!-- OBSERVAÇÕES -->
+        <div class="campo">
+          <label for="observacoes">
+            Observações <span>(opcional)</span>
+          </label>
+
+          <textarea
+            id="observacoes"
+            [(ngModel)]="observacoes"
+            placeholder="Digite suas observações...">
+          </textarea>
+        </div>
+
+        <!-- MENSAGEM DE ERRO -->
+        <div class="mensagem erro" *ngIf="mensagemErro">
+          ⚠ {{ mensagemErro }}
+        </div>
+
+        <!-- MENSAGEM DE SUCESSO -->
+        <div class="mensagem sucesso" *ngIf="mensagemSucesso">
+          ✓ {{ mensagemSucesso }}
+        </div>
+
+        <!-- ENVIAR -->
+        <button
+          type="button"
+          class="btn-enviar"
+          (click)="enviarJustificativa()">
+          Enviar Justificativa
+        </button>
+
       </div>
     </div>
 
-    <!-- Observações -->
-    <div class="campo">
-      <label for="observacoes">
-        Observações
-        <span>(opcional)</span>
-      </label>
+  </main>
 
-      <textarea
-        id="observacoes"
-        [(ngModel)]="observacoes"
-        placeholder="Digite suas observações...">
-      </textarea>
-    </div>
-
-    <!-- Mensagem de erro -->
-    <div
-      class="mensagem erro"
-      *ngIf="mensagemErro">
-      ⚠ {{ mensagemErro }}
-    </div>
-
-    <!-- Mensagem de sucesso -->
-    <div
-      class="mensagem sucesso"
-      *ngIf="mensagemSucesso">
-      ✓ {{ mensagemSucesso }}
-    </div>
-
-    <!-- Enviar -->
-    <button
-      type="button"
-      class="btn-enviar"
-      (click)="enviarJustificativa()">
-      Enviar Justificativa
-    </button>
-
-  </div>
 </div>
