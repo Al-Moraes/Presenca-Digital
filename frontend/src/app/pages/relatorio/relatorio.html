@@ -1,1 +1,64 @@
-<p>relatorio works!</p>
+<div class="relatorio">
+   <div class="cabecalho">
+    <button class="voltar" (click)="voltar()"></button>
+    <h1>Relatório</h1>
+   </div>
+
+   <div class="filtros">
+    <div>
+        <label>Período</label>
+
+        <select [(ngModel)]="periodo" (change)="mudarPeriodo()">
+            <option>Maio/2026</option>
+            <option>Abril/2016</option>
+            <option>Março/2026</option>
+        </select>
+    </div>
+
+    <button class="exportar" (click)="exportarPDF()">Exportar PDF</button>
+   </div>
+
+   <div class="cards">
+
+    <div class="card total">
+        <span>Total</span>
+        <strong>{{total}}</strong>
+    </div>
+
+    <div class="card aprovados">
+        <span>Aprovadas</span>
+        <strong>{{aprovadas}}</strong>
+    </div>
+
+    <div class="card reprovadas">
+    <span>Reprovadas</span>
+    <strong>{{reprovadas}}</strong>
+   </div>
+
+</div>
+
+<h2>Justificativas por motivo</h2>
+
+<div class="grafico-area">
+
+     <div class="grafico">
+        <div class="circulo"></div>
+     </div>
+
+<div class="legenda">
+
+<p><span class="azul"></span>Atestado Médico <b>45%</b></p>
+<p><span class="verde"></span>Consulta Médica<b>25%</b></p>
+<p><span class="roxo"></span>Compromisso Familiar<b>15%</b></p>
+<p><span class="lilas"></span>Outros<b>15%</b></p>
+ </div>
+
+</div>
+
+<div class="info">Relatório atualizado em 20/05/2025 ás 10:30</div>
+
+<a class="menu"(click)="voltar()">voltar ao menu</a> 
+
+</div>
+ 
+
