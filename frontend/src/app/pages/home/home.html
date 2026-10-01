@@ -1,2 +1,166 @@
-<h1>HELLO WORLD!</h1>
-<p>aparece pelo amor de deus</p>
+<div class="layout">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <!-- LOGO -->
+    <div class="logo-container">
+      <img src="presenca-digital.png.png" alt="Presença Digital">
+    </div>
+    <!-- MENU -->
+    <nav class="menu">
+
+     <a class="nav-item" routerLink="/home">
+        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span >Início</span>
+      </a>
+      <a class="nav-item" routerLink="/justificativa">
+        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+        <span >Nova Justificativa</span>
+      </a>
+      <a class="nav-item"  routerLink="/solicitacoes">
+        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        <span>Solicitações</span>
+      </a>
+      <a class="nav-item" routerLink="/relatorio">
+        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <span >Histórico</span>
+      </a>
+    </nav>
+  
+    <!-- Sair fica fora do menu -->
+  <a routerLink="/login" class="btn-sair">
+    <span>↪</span>
+    <span>Sair</span>
+  </a>
+
+  </aside>
+
+  <!-- ================= CONTEÚDO PRINCIPAL ================= -->
+  <main class="conteudo">
+
+    <!-- CABEÇALHO -->
+    <header class="topo">
+
+      <h1>Dashboard</h1>
+
+    </header>
+
+    <!-- ================= HOME ================= -->
+    <section class="home">
+
+      <!-- SAUDAÇÃO -->
+      <div class="boas-vindas">
+
+        <h2>Olá, Matheus!</h2>
+
+        <p>
+          Veja o resumo das suas justificativas.
+        </p>
+
+      </div>
+
+      <!-- ================= RESUMO ================= -->
+      <section class="resumo">
+
+        <div class="card-resumo pendentes">
+
+          <strong>12</strong>
+
+          <span>Pendentes</span>
+
+        </div>
+
+        <div class="card-resumo aprovados">
+
+          <strong>8</strong>
+
+          <span>Aprovados</span>
+
+        </div>
+
+        <div class="card-resumo recusados">
+
+          <strong>3</strong>
+
+          <span>Recusados</span>
+
+        </div>
+
+      </section>
+
+      <!-- ================= ÚLTIMAS SOLICITAÇÕES ================= -->
+      <div class="titulo-solicitacoes">
+
+        <h2>Últimas solicitações</h2>
+
+        <a routerLink="/solicitacoes">
+          Ver todas
+        </a>
+
+      </div>
+
+      <!-- LISTA -->
+      <div class="lista-solicitacoes">
+
+        <!-- ATESTADO -->
+        <div class="solicitacao">
+
+          <div class="icone-status pendente">
+            ◷
+          </div>
+
+          <div class="informacoes">
+
+            <strong>Atestado Médico</strong>
+
+            <span>
+              29/07/2026 - Pendente
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- CONSULTA -->
+        <div class="solicitacao">
+
+          <div class="icone-status aprovado">
+            ✓
+          </div>
+
+          <div class="informacoes">
+
+            <strong>Consulta Médica</strong>
+
+            <span>
+              02/06/2026 - Aprovado
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- COMPROMISSO -->
+        <div class="solicitacao">
+
+          <div class="icone-status recusado">
+            ×
+          </div>
+
+          <div class="informacoes">
+
+            <strong>Compromisso Familiar</strong>
+
+            <span>
+              25/05/2026 - Reprovado
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+</div>
