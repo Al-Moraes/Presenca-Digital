@@ -9,6 +9,46 @@
   min-height: 100vh;
 }
 
+/* Item de Navegação (Menu) Consolidado */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #64748b;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Faz toda a área da caixa ser clicável repassando o evento para o <a> */
+.nav-item > * {
+  pointer-events: none;
+}
+
+/* Feedback ao passar o rato no menu (hover + deslize suave) */
+.nav-item:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  transform: translateX(4px);
+}
+
+/* Feedback ao clicar no menu (active) */
+.nav-item:active {
+  transform: translateX(2px) scale(0.98);
+  background-color: #e2e8f0;
+}
+
+.nav-item.active {
+  background-color: #eff6ff;
+  color: #2563eb;
+  font-weight: 600; 
+}
+
 /*LAYOUT PRINCIPAL*/
 .layout {
   display: flex;
