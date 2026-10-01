@@ -1,1 +1,166 @@
-<p>justificativa works!</p>
+<div class="pagina">
+
+  <!-- Cabeçalho -->
+  <div class="cabecalho">
+    <button class="btn-voltar" type="button">
+      ←
+    </button>
+
+    <h1>Nova Justificativa</h1>
+  </div>
+
+  <div class="conteudo">
+
+    <!-- Tipo de justificativa -->
+    <div class="campo">
+      <label for="tipo">Tipo de Justificativa</label>
+
+      <select
+        id="tipo"
+        [(ngModel)]="tipoJustificativa">
+
+        <option value="" disabled>
+          Selecione o tipo
+        </option>
+
+        <option
+          *ngFor="let tipo of tiposJustificativa"
+          [value]="tipo">
+          {{ tipo }}
+        </option>
+
+      </select>
+    </div>
+
+
+    <!-- Data -->
+    <div class="campo">
+      <label for="data">Data da Falta</label>
+
+      <div class="campo-data">
+        <input
+          id="data"
+          type="date"
+          [(ngModel)]="dataFalta">
+      </div>
+    </div>
+
+
+    <!-- Documento -->
+    <div class="campo">
+      <label>Documento</label>
+
+      <div
+        class="area-upload"
+        [class.arquivo-adicionado]="arquivoSelecionado">
+
+        <input
+          #arquivoInput
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          (change)="selecionarArquivo($event)"
+          hidden>
+
+        <ng-container *ngIf="!arquivoSelecionado">
+
+          <div class="icone-upload">
+            📄
+          </div>
+
+          <p>
+            Clique para anexar ou arraste o arquivo aqui
+          </p>
+
+          <span>
+            PDF, JPG ou PNG até 10 MB
+          </span>
+
+          <button
+            type="button"
+            class="btn-anexar"
+            (click)="arquivoInput.click()">
+            Selecionar arquivo
+          </button>
+
+        </ng-container>
+
+
+        <!-- Arquivo selecionado -->
+        <ng-container *ngIf="arquivoSelecionado">
+
+          <div class="arquivo-info">
+
+            <div class="icone-arquivo">
+              📎
+            </div>
+
+            <div class="dados-arquivo">
+              <strong>{{ nomeArquivo }}</strong>
+
+              <span>
+                {{ (arquivoSelecionado.size / 1024 / 1024).toFixed(2) }} MB
+              </span>
+            </div>
+
+            <button
+              type="button"
+              class="btn-remover"
+              (click)="removerArquivo()">
+              ✕
+            </button>
+
+          </div>
+
+        </ng-container>
+
+      </div>
+    </div>
+
+
+    <!-- Observações -->
+    <div class="campo">
+      <label for="observacoes">
+        Observações <span>(opcional)</span>
+      </label>
+
+      <textarea
+        id="observacoes"
+        [(ngModel)]="observacoes"
+        placeholder="Digite suas observações...">
+      </textarea>
+    </div>
+
+
+    <!-- Mensagem de erro -->
+    <div
+      class="mensagem erro"
+      *ngIf="mensagemErro">
+
+      ⚠ {{ mensagemErro }}
+
+    </div>
+
+
+    <!-- Mensagem de sucesso -->
+    <div
+      class="mensagem sucesso"
+      *ngIf="mensagemSucesso">
+
+      ✓ {{ mensagemSucesso }}
+
+    </div>
+
+
+    <!-- Botão -->
+    <button
+      type="button"
+      class="btn-enviar"
+      (click)="enviarJustificativa()">
+
+      Enviar Justificativa
+
+    </button>
+
+  </div>
+
+</div>
