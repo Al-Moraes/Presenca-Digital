@@ -6,8 +6,8 @@
 }
 
 /* Cursor pointer unificado para todos os elementos interativos */
-button,
-select,
+.button,
+.select,
 .nav-item,
 .tab-button,
 .btn-icon {
