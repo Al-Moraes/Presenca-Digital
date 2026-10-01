@@ -207,15 +207,15 @@
 
 /*CORES DOS CARDS*/
 .card-resumo.pendentes {
-  background-color: #f28c28;
+  background-color: #fcec93;
 }
 
 .card-resumo.aprovados {
-  background-color: #7df266;
+  background-color: #b1fca2;
 }
 
 .card-resumo.recusados {
-  background-color: #e94b35;
+  background-color: #fc8474;
 }
 
 /*TÍTULO DAS SOLICITAÇÕES*/
@@ -354,6 +354,7 @@
   text-decoration: none;
 }
 
+
 .btn-sair:hover {
   background-color: #fff5f5;
   color: #c62828;
@@ -396,7 +397,6 @@
 .nav-item.logout {
   color: #ef4444;
 }
-
 .nav-item.logout:hover {
   background-color: #fef2f2;
   color: #dc2626;
