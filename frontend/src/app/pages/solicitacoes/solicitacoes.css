@@ -5,6 +5,15 @@
   font-family: 'Inter', sans-serif;
 }
 
+/* Cursor pointer unificado para todos os elementos interativos */
+.button,
+.select,
+.nav-item,
+.tab-button,
+.btn-icon {
+  cursor: pointer;
+}
+
 /* Estrutura Principal Flexbox (Impede sobreposição) */
 .app-layout {
   display: flex;
@@ -48,28 +57,44 @@
   flex: 1;
 }
 
+/* Item de Navegação (Menu) Consolidado */
 .nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 14px;
+  width: 100%;
+  padding: 12px 16px;
   border-radius: 8px;
   color: #64748b;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Faz toda a área da caixa ser clicável repassando o evento para o <a> */
+.nav-item > * {
+  pointer-events: none;
+}
+
+/* Feedback ao passar o rato no menu (hover + deslize suave) */
 .nav-item:hover {
   background-color: #f1f5f9;
   color: #0f172a;
+  transform: translateX(4px);
+}
+
+/* Feedback ao clicar no menu (active) */
+.nav-item:active {
+  transform: translateX(2px) scale(0.98);
+  background-color: #e2e8f0;
 }
 
 .nav-item.active {
   background-color: #eff6ff;
   color: #2563eb;
-  font-weight: 600;
+  font-weight: 600; 
 }
 
 .nav-icon {
@@ -88,6 +113,7 @@
 
 .nav-item.logout:hover {
   background-color: #fef2f2;
+  color: #dc2626;
 }
 
 /* Área de Conteúdo */
@@ -156,7 +182,7 @@
   color: #94a3b8;
 }
 
-/* Abas */
+/* Abas de Navegação */
 .tabs-bar {
   display: flex;
   gap: 24px;
@@ -171,11 +197,38 @@
   font-size: 14px;
   font-weight: 500;
   color: #64748b;
-  cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: color 0.2s ease;
+}
+
+.tab-button:hover {
+  color: #2563eb;
+}
+
+.tab-button:active {
+  transform: translateY(1px);
+}
+
+/* Linha inferior animada das Abas */
+.tab-button::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  right: 50%;
+  height: 2.5px;
+  background-color: #2563eb;
+  border-radius: 2px 2px 0 0;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-button:hover::after {
+  left: 0;
+  right: 0;
+  opacity: 0.5;
 }
 
 .tab-button.active {
@@ -184,14 +237,9 @@
 }
 
 .tab-button.active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
   left: 0;
   right: 0;
-  height: 2px;
-  background-color: #2563eb;
-  border-radius: 2px;
+  opacity: 1;
 }
 
 .badge {
@@ -203,7 +251,7 @@
   border-radius: 12px;
 }
 
-/* Cartões com Sombras Suaves */
+/* Lista de Cartões */
 .requests-list {
   display: flex;
   flex-direction: column;
@@ -268,24 +316,24 @@
   color: #b91c1c;
 }
 
-/* Botões de Ação */
+/* Botões de Ação dos Cartões com Feedback Visual Completo */
 .card-actions {
   display: flex;
   gap: 8px;
 }
 
 .btn-icon {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #cbd5e1;
   background-color: #ffffff;
   color: #64748b;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
 }
 
 .btn-icon svg {
@@ -293,15 +341,31 @@
   height: 16px;
 }
 
+/* Feedback genérico ao passar o rato */
 .btn-icon:hover {
   background-color: #f8fafc;
   color: #0f172a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Efeito de clique (compressão) */
+.btn-icon:active {
+  transform: translateY(0) scale(0.93);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Cores específicas de Hover para cada ação */
+.btn-icon.view:hover {
+  background-color: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
 }
 
 .btn-icon.approve:hover {
   background-color: #dcfce7;
-  color: #16a34a;
-  border-color: #bbf7d0;
+  color: #15803d;
+  border-color: #86efac;
 }
 
 .btn-icon.reject:hover {

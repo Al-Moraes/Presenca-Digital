@@ -1,0 +1,379 @@
+.pagina {
+  min-height: 100vh;
+  background: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+
+/* CABEÇALHO */
+
+.cabecalho {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 35px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.cabecalho h1 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 600;
+  color: #263b5a;
+}
+
+.btn-voltar {
+  border: none;
+  background: transparent;
+  font-size: 32px;
+  color: #263b5a;
+  cursor: pointer;
+}
+
+
+/* CONTEÚDO */
+
+.conteudo {
+  width: 680px;
+  max-width: calc(100% - 40px);
+  margin: 40px auto 60px;
+}
+
+
+/* CAMPOS */
+
+.campo {
+  margin-bottom: 30px;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #263b5a;
+}
+
+.campo label span {
+  font-weight: normal;
+  color: #888;
+  font-size: 14px;
+}
+
+
+/* SELECT */
+
+select {
+  width: 100%;
+  height: 58px;
+  padding: 0 18px;
+  border: 1px solid #cfd4dc;
+  border-radius: 4px;
+  background: #fff;
+  color: #555;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+select:focus {
+  border-color: #2764b8;
+}
+
+
+/* OUTRA JUSTIFICATIVA */
+
+.outra-justificativa {
+  margin-top: -15px;
+  margin-bottom: 30px;
+}
+
+.outra-justificativa label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #263b5a;
+}
+
+.campo-outro {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.campo-outro input {
+  flex: 1;
+  height: 52px;
+  padding: 0 15px;
+  border: 1px solid #cfd4dc;
+  border-radius: 4px;
+  background: #fff;
+  color: #555;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.campo-outro input::placeholder {
+  color: #999;
+}
+
+.campo-outro input:focus {
+  border-color: #2764b8;
+}
+
+
+/* BOTÃO ADICIONAR */
+
+.btn-adicionar {
+  height: 52px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 4px;
+  background: #2764b8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.btn-adicionar:hover {
+  background: #1d4f91;
+}
+
+
+/* DATA */
+
+.campo-data {
+  position: relative;
+}
+
+input[type="date"] {
+  width: 100%;
+  height: 58px;
+  padding: 0 18px;
+  border: 1px solid #cfd4dc;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #555;
+  box-sizing: border-box;
+  outline: none;
+}
+
+input[type="date"]:focus {
+  border-color: #2764b8;
+}
+
+
+/* UPLOAD */
+
+.area-upload {
+  width: 100%;
+  min-height: 260px;
+  border: 1.5px dashed #bfc6d1;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 30px;
+  transition: 0.2s;
+}
+
+.area-upload:hover {
+  border-color: #2764b8;
+  background: #fafcff;
+}
+
+.icone-upload {
+  font-size: 50px;
+  margin-bottom: 15px;
+}
+
+.area-upload p {
+  margin: 0 0 7px;
+  font-size: 15px;
+  color: #666;
+}
+
+.area-upload span {
+  color: #999;
+  font-size: 13px;
+}
+
+
+/* BOTÃO ANEXAR */
+
+.btn-anexar {
+  margin-top: 20px;
+  padding: 11px 22px;
+  border: 1px solid #2764b8;
+  border-radius: 5px;
+  background: white;
+  color: #2764b8;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-anexar:hover {
+  background: #2764b8;
+  color: white;
+}
+
+
+/* ARQUIVO */
+
+.area-upload.arquivo-adicionado {
+  min-height: 120px;
+  border-style: solid;
+  border-color: #d5dbe3;
+}
+
+.arquivo-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-align: left;
+}
+
+.icone-arquivo {
+  font-size: 35px;
+}
+
+.dados-arquivo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dados-arquivo strong {
+  color: #263b5a;
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.dados-arquivo span {
+  color: #888;
+  font-size: 12px;
+}
+
+.btn-remover {
+  border: none;
+  background: transparent;
+  color: #d9534f;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btn-remover:hover {
+  color: #b52b27;
+}
+
+
+/* OBSERVAÇÕES */
+
+textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 15px;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid #cfd4dc;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: #2764b8;
+}
+
+
+/* MENSAGENS */
+
+.mensagem {
+  padding: 13px 16px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.erro {
+  background: #fff1f1;
+  border: 1px solid #f0b5b5;
+  color: #c62828;
+}
+
+.sucesso {
+  background: #edf8ef;
+  border: 1px solid #a8d5ae;
+  color: #287b35;
+}
+
+
+/* BOTÃO ENVIAR */
+
+.btn-enviar {
+  width: 100%;
+  height: 55px;
+  border: none;
+  border-radius: 5px;
+  background: #2764b8;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-enviar:hover {
+  background: #1d4f91;
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 700px) {
+
+  .cabecalho {
+    padding: 0 20px;
+  }
+
+  .conteudo {
+    max-width: calc(100% - 30px);
+    margin-top: 25px;
+  }
+
+  .cabecalho h1 {
+    font-size: 21px;
+  }
+
+  .area-upload {
+    min-height: 220px;
+  }
+
+  /* Campo "Outros" no celular */
+  .campo-outro {
+    flex-direction: column;
+  }
+
+  .campo-outro input {
+    width: 100%;
+  }
+
+  .btn-adicionar {
+    width: 100%;
+  }
+}
