@@ -194,7 +194,6 @@
   color: #111827;
 }
 
-
 .card-resumo strong {
   font-size: 21px;
   margin-bottom: 4px;
@@ -311,53 +310,182 @@
 
 .informacoes span {
   font-size: 11px;
-
   color: #667085;
 }
 
 /*RESPONSIVIDADE*/
-@media (max-width: 800px) {
-  .sidebar {
-    width: 210px;
+/* 📱 CELULARES — Android e iOS
+   Até 600px
+*/
+@media (max-width: 600px) {
+
+  .layout {
+    flex-direction: column;
   }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+  }
+
+  .logo-container img {
+    max-width: 150px;
+  }
+
+  .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .nav-item {
+    padding: 10px;
+  }
+
+  .nav-item span {
+    font-size: 13px;
+  }
+
+  .icone {
+    width: 18px;
+    height: 18px;
+  }
+
+  .btn-sair {
+    margin: 10px auto 15px;
+  }
+
   .conteudo {
-    padding: 25px;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .topo h1 {
+    font-size: 24px;
+  }
+
+  .boas-vindas h2 {
+    font-size: 20px;
+  }
+
+  .boas-vindas p {
+    font-size: 14px;
+  }
+
+  /* Cards de resumo */
+  .resumo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .card-resumo {
+    width: 130px;
+    min-width: 130px;
+  }
+
+  /* Últimas solicitações */
+  .titulo-solicitacoes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .lista-solicitacoes {
+    width: 100%;
+  }
+
+  .solicitacao {
+    width: 100%;
   }
 }
 
-@media (max-width: 600px) {
+/* =====================================================
+   📱 TABLETS — Android / iPad
+   601px até 899px
+   ===================================================== */
+@media (min-width: 601px) and (max-width: 899px) {
+  .layout {
+    display: flex;
+  }
   .sidebar {
     width: 190px;
+    min-width: 190px;
   }
   .conteudo {
-    padding: 20px;
+    width: calc(100% - 190px);
+    padding: 25px;
   }
   .resumo {
+    display: flex;
     flex-wrap: wrap;
+    gap: 15px;
   }
   .card-resumo {
     width: 130px;
   }
+  .lista-solicitacoes {
+    width: 100%;
+  }
 }
 
-/* BOTÃO SAIR */
-.btn-sair {
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 55px;
-  padding: 0 15px;
-  border-top: 1px solid #eeeeee;
-  color: #e53935;
-  font-size: 14px;
-  text-decoration: none;
+/* =====================================================
+   💻 NOTEBOOK / DESKTOP
+   900px até 1199px
+   ===================================================== */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .sidebar {
+    width: 210px;
+    min-width: 210px;
+  }
+  .conteudo {
+    width: calc(100% - 210px);
+    padding: 25px;
+  }
+  .resumo {
+    display: flex;
+    gap: 20px;
+  }
+  .card-resumo {
+    flex: 1;
+    min-width: 130px;
+  }
 }
 
+/* =====================================================
+   🖥️ NOTEBOOK GRANDE / DESKTOP
+   A partir de 1200px
+   ===================================================== */
 
-.btn-sair:hover {
-  background-color: #fff5f5;
-  color: #c62828;
+@media (min-width: 1200px) {
+  .sidebar {
+    width: 240px;
+  }
+  .conteudo {
+    width: calc(100% - 240px);
+    padding: 30px;
+  }
+  .resumo {
+    display: flex;
+    gap: 20px;
+  }
+  .card-resumo {
+    flex: 1;
+  }
 }
 
 .app-layout {
