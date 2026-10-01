@@ -1,1 +1,142 @@
-<p>cadastro works!</p>
+<div class="pagina-cadastro">
+
+  <div class="cadastro-card">
+
+    <div class="logo">
+      <div class="icone-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M11.7 2.05a1 1 0 0 1 .6 0l9 3a1 1 0 0 1 .7 1v.1a1 1 0 0 1-.36.78l-3.34 2.8a1 1 0 0 1-1.3-.06L14 7.2v3.3a1 1 0 0 1-.55.89l-5 2.5a1 1 0 0 1-1.35-.45l-1.5-3a1 1 0 0 1 .15-1.12l2.36-2.83-2.71 2.26A1 1 0 0 1 4 8.2V6.15a1 1 0 0 1 .7-1l7-3.1zM12 4.15 5.5 7 12 9.85 18.5 7 12 4.15z"/>
+      <path d="M12 14a1 1 0 0 1 1 1v4.58l2.3-2.3a1 1 0 0 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.42l2.3 2.3V15a1 1 0 0 1 1-1z"/>
+    </svg>
+      </div>
+      <h1>Presença Digital</h1>
+      <p>Cadastro de Servidores e Docentes</p>
+    </div>
+
+    <form (ngSubmit)="cadastrar()" #formCadastro="ngForm">
+
+      <!-- NOME COMPLETO -->
+      <div class="campo">
+        <label for="nome">Nome Completo</label>
+        <input
+          type="text"
+          id="nome"
+          name="nome"
+          [(ngModel)]="nome"
+          placeholder="Digite o nome completo"
+          required
+        >
+      </div>
+
+      <!-- E-MAIL INSTITUCIONAL -->
+      <div class="campo">
+        <label for="email">E-mail Institucional</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="exemplo@presencadigital.com"
+          required
+        >
+      </div>
+
+      <!-- TIPO DE USUÁRIO -->
+      <div class="campo">
+        <label for="tipo">Perfil de Acesso</label>
+        <select
+          id="tipo"
+          name="tipo"
+          [(ngModel)]="tipo"
+          required
+        >
+          <option value="professor">Professor(a)</option>
+          <option value="secretaria">Secretaria / Gestão</option>
+        </select>
+      </div>
+
+      <!-- CAMPO ESPECÍFICO PARA PROFESSOR -->
+      <div class="campo" *ngIf="tipo === 'professor'">
+        <label for="disciplina">Disciplina / Cadeira</label>
+        <input
+          type="text"
+          id="disciplina"
+          name="disciplina"
+          [(ngModel)]="disciplina"
+          placeholder="Ex: Matemática, Programação Web"
+          required
+        >
+      </div>
+
+      <!-- SENHA -->
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <div class="campo-senha">
+          <input
+            [type]="mostrarSenha ? 'text' : 'password'"
+            id="senha"
+            name="senha"
+            [(ngModel)]="senha"
+            placeholder="Crie uma senha segura"
+            required
+            minlength="6"
+          >
+          <button
+            type="button"
+            class="mostrar-senha"
+            (click)="alternarSenha()"
+          >
+            {{ mostrarSenha ? '🙈' : '👁️' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- CONFIRMAR SENHA -->
+      <div class="campo">
+        <label for="confirmarSenha">Confirmar Senha</label>
+        <input
+          [type]="mostrarSenha ? 'text' : 'password'"
+          id="confirmarSenha"
+          name="confirmarSenha"
+          [(ngModel)]="confirmarSenha"
+          placeholder="Repita a senha"
+          required
+        >
+      </div>
+
+      <!-- MENSAGEM DE ALERTA OU SUCESSO -->
+      <div
+        *ngIf="mensagem"
+        class="mensagem"
+        [class.sucesso]="sucesso"
+      >
+        {{ mensagem }}
+      </div>
+
+      <!-- BOTAO CADASTRAR -->
+      <button
+        type="submit"
+        class="botao-cadastrar"
+        [disabled]="formCadastro.invalid"
+      >
+        Cadastrar Conta
+      </button>
+
+      <!-- LINK PARA VOLTAR AO LOGIN -->
+      <a
+        routerLink="/login"
+        class="voltar-login"
+      >
+        Já possui conta? Faça login
+      </a>
+
+    </form>
+
+    <div class="rodape">
+      <p>Presença Digital</p>
+      <span>Sistema de gerenciamento de justificativas</span>
+    </div>
+
+  </div>
+
+</div>
