@@ -39,15 +39,11 @@
 }
 
 .logo-placeholder {
-  width: 120px;
-  height: 80px;
-  background-color: transparent;
-  color: #ffffff;
-  font-weight: 700;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 .sidebar-nav {
