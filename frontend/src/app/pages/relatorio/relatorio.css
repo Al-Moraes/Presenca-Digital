@@ -113,18 +113,31 @@
   color: #dc2626;
 }
 /*ÁREA PRINCIPAL*/
-.main-content {
+/* .main-content {
   margin-left: 240px;
   width: calc(100% - 240px);
   min-height: 100vh;
   padding: 32px 40px 32px 1100px;
   max-width: none;
+} */
+ .main-content {
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  min-height: 100vh;
+  padding: 32px 40px;
+  display: flex;
+  justify-content: center;
 }
 /* RELATÓRIO*/
-.relatorio {
+/* .relatorio {
   width: 300%;
   max-width: 1100px;
   margin: 0;
+  background: white; */
+  .relatorio {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 10px #ddd;
