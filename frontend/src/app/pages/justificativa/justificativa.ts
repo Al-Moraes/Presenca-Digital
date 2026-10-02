@@ -2,22 +2,19 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { JustificativaService } from '../../../service/justificativa-service/justificativa.service';
-import { RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-justificativa',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLinkActive],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './justificativa.html',
   styleUrls: ['./justificativa.css']
 })
 export class Justificativa {
 
   constructor(
-    private router: Router,
-    private justificativaService: JustificativaService
-  ) {}
+    private router: Router) {}
 
   // Voltar para o início do sistema
   voltarInicio(): void {
@@ -39,7 +36,7 @@ export class Justificativa {
   outraJustificativa = '';
   dataFalta = '';
   observacoes = '';
-
+  
   arquivoSelecionado: File | null = null;
   nomeArquivo = '';
 
@@ -142,13 +139,13 @@ export class Justificativa {
       return;
     }
 
-    this.justificativaService.adicionarSolicitacao({
-      // Pôr nome do usuário no futuro aqui alunoNome: 'Alice Bonitona123'
-      nomeAluno: 'Alice Moraes',
+    console.log({
+     
       tipo: this.tipoJustificativa,
-      dataFalta: this.dataFalta,
-      arquivo: this.nomeArquivo,
+      data: this.dataFalta,
+      arquivo: this.arquivoSelecionado,
       observacoes: this.observacoes
+
     });
 
     this.mensagemSucesso = 'Justificativa enviada com sucesso!';
