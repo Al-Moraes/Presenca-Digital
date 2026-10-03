@@ -158,30 +158,21 @@
 }
 
 /*BOAS-VINDAS*/
-.perfil {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+.boas-vindas {
+  margin-bottom: 25px;
 }
-
-.icone-perfil {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background-color: #e5e7eb;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 22px;
-}
-
-.perfil span {
-  font-size: 14px;
-  font-weight: 600;
+.boas-vindas h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 700;
   color: #111827;
+}
+
+.boas-vindas p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #667085;
 }
 
 /*CARDS DE RESUMO*/
