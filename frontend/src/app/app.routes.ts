@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
+import { Justificativa } from './pages/justificativa/justificativa';
+import { Admin } from './pages/admin/admin';
 
 export const routes: Routes = [
+    { path: 'justificativa', component: Justificativa },
+    { path: 'admin', component: Admin },
     {
         path: '',
         loadComponent: () =>
@@ -30,6 +34,11 @@ export const routes: Routes = [
         path: 'cadastro',
         loadComponent: () =>
             import('./pages/cadastro/cadastro').then((m) => m.Cadastro),
+    },
+    {
+        path: 'admin',
+        loadComponent: () =>
+            import('./pages/admin/admin').then((m) => m.Admin),
     },
     {
         path: '**',

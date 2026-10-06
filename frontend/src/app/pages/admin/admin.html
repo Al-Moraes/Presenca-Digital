@@ -1,1 +1,49 @@
-<p>admin works!</p>
+<div class="container-admin">
+  <h2>Painel da Coordenação - Análise de Justificativas</h2>
+
+  <div *ngIf="justificativas.length === 0" class="alerta-vazio">
+    Nenhuma justificativa enviada até o momento.
+  </div>
+
+  <div class="card-justificativa" *ngFor="let item of justificativas">
+    <div class="header-card">
+      <h3>{{ item.tipoJustificativa }}</h3>
+      <span class="badge" [ngClass]="item.status.toLowerCase()">{{ item.status }}</span>
+    </div>
+
+    <p><strong>Data da Falta:</strong> {{ item.dataFalta | date:'dd/MM/yyyy' }}</p>
+    <p><strong>Observações do Aluno:</strong> {{ item.observacoes || 'Nenhuma observação informada.' }}</p>
+    <p><small class="text-muted">Enviado em: {{ item.dataEnvio | date:'dd/MM/yyyy HH:mm' }}</small></p>
+
+    <!-- Botão para abrir/baixar o comprovante enviado pelo aluno -->
+    <div *ngIf="item.arquivoBase64" class="area-anexo">
+      <a [href]="item.arquivoBase64" [download]="item.nomeArquivo || 'comprovante'" target="_blank" class="btn-anexo">
+        📎 Abrir Anexo ({{ item.nomeArquivo }})
+      </a>
+    </div>
+
+    <!-- Área de parecer da coordenação quando PENDENTE -->
+    <div class="acao-coordenacao" *ngIf="item.status === 'Em Revisão'">
+      <label [for]="'obs-' + item.id">Parecer da Coordenação:</label>
+      <textarea 
+        [id]="'obs-' + item.id" 
+        [(ngModel)]="observacoes[item.id]" 
+        placeholder="Escreva uma observação ou justificativa da decisão (opcional)...">
+      </textarea>
+
+      <div class="botoes">
+        <button class="btn-deferir" (click)="responder(item.id, 'Aprovada')">
+          Deferir (Aprovar)
+        </button>
+        <button class="btn-indeferir" (click)="responder(item.id, 'Indeferida')">
+          Indeferir (Recusar)
+        </button>
+      </div>
+    </div>
+
+    <!-- Exibição do parecer gravado caso já tenha sido avaliada -->
+    <div class="parecer-registrado" *ngIf="item.status !== 'Em Revisão'">
+      <p><strong>Parecer da Coordenação:</strong> {{ item.observacaoCoordenacao || 'Sem parecer registrado.' }}</p>
+    </div>
+  </div>
+</div>

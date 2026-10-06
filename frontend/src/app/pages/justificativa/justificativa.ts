@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { JustificativaService } from '../../services/justificativa';
 
 @Component({
   selector: 'app-justificativa',
@@ -14,9 +14,10 @@ import { RouterLink } from '@angular/router';
 export class Justificativa {
 
   constructor(
-    private router: Router) {}
+    private router: Router,
+    private justificativaService: JustificativaService // Injetado aqui
+  ) {}
 
-  // Voltar para o início do sistema
   voltarInicio(): void {
     this.router.navigate(['/']);
   }
@@ -52,8 +53,7 @@ export class Justificativa {
     const justificativa = this.outraJustificativa.trim();
 
     if (!justificativa) {
-      this.mensagemErro =
-        'Digite uma justificativa antes de adicionar.';
+      this.mensagemErro = 'Digite uma justificativa antes de adicionar.';
       return;
     }
 
@@ -62,8 +62,7 @@ export class Justificativa {
     );
 
     if (jaExiste) {
-      this.mensagemErro =
-        'Essa justificativa já está cadastrada.';
+      this.mensagemErro = 'Essa justificativa já está cadastrada.';
       return;
     }
 
@@ -94,15 +93,13 @@ export class Justificativa {
     ];
 
     if (!tiposPermitidos.includes(arquivo.type)) {
-      this.mensagemErro =
-        'Formato inválido. Envie um arquivo PDF, JPG ou PNG.';
+      this.mensagemErro = 'Formato inválido. Envie um arquivo PDF, JPG ou PNG.';
       input.value = '';
       return;
     }
 
     if (arquivo.size > 10 * 1024 * 1024) {
-      this.mensagemErro =
-        'O arquivo não pode ter mais de 10 MB.';
+      this.mensagemErro = 'O arquivo não pode ter mais de 10 MB.';
       input.value = '';
       return;
     }
@@ -117,43 +114,59 @@ export class Justificativa {
     this.nomeArquivo = '';
   }
 
-  enviarJustificativa(): void {
+  // Função auxiliar para converter o arquivo selecionado em String Base64 para salvar no LocalStorage
+  private converterArquivoParaBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  async enviarJustificativa(): Promise<void> {
     this.mensagemErro = '';
     this.mensagemSucesso = '';
 
     if (!this.tipoJustificativa) {
-      this.mensagemErro =
-        'Selecione o tipo de justificativa.';
+      this.mensagemErro = 'Selecione o tipo de justificativa.';
       return;
     }
 
     if (!this.dataFalta) {
-      this.mensagemErro =
-        'Selecione a data da falta.';
+      this.mensagemErro = 'Selecione a data da falta.';
       return;
     }
 
     if (!this.arquivoSelecionado) {
-      this.mensagemErro =
-        'Anexe um documento para continuar.';
+      this.mensagemErro = 'Anexe um documento para continuar.';
       return;
     }
 
-    console.log({
-     
-      tipo: this.tipoJustificativa,
-      data: this.dataFalta,
-      arquivo: this.arquivoSelecionado,
-      observacoes: this.observacoes
+    try {
+      // Converte o arquivo para salvar localmente
+      const arquivoBase64 = await this.converterArquivoParaBase64(this.arquivoSelecionado);
 
-    });
+      // Salva no LocalStorage via Serviço
+      this.justificativaService.adicionarJustificativa({
+        tipoJustificativa: this.tipoJustificativa,
+        dataFalta: this.dataFalta,
+        observacoes: this.observacoes,
+        nomeArquivo: this.nomeArquivo,
+        arquivoBase64: arquivoBase64
+      });
 
-    this.mensagemSucesso = 'Justificativa enviada com sucesso!';
+      this.mensagemSucesso = 'Justificativa enviada com sucesso para a Coordenação!';
 
-    this.tipoJustificativa = '';
-    this.dataFalta = '';
-    this.observacoes = '';
-    this.arquivoSelecionado = null ;
-    this.nomeArquivo = '';
+      // Limpa os campos
+      this.tipoJustificativa = '';
+      this.dataFalta = '';
+      this.observacoes = '';
+      this.arquivoSelecionado = null;
+      this.nomeArquivo = '';
+
+    } catch (error) {
+      this.mensagemErro = 'Erro ao processar o arquivo anexado.';
+    }
   }
 }
