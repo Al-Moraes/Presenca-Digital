@@ -11,28 +11,37 @@
     <p class="subtitle">Acesse sua conta</p>
 
     <!-- Formulário -->
-    <form class="login-form">
+    <form [formGroup]="formulario" class="login-form">
       <div class="form-group">
         <label for="email">E-mail</label>
-        <input 
-          type="email" 
-          id="email" 
-          placeholder="Insira seu E-mail" 
-        />
+        <p><input type="email" formControlName="email" placeholder="Insira seu E-mail"/></p>
+        @if(formulario.get('email')?.touched && formulario.get('email')?.invalid) {
+          @if(formulario.get('email')?.errors?.['required']) {
+            <small style="color: red;">E-mail Obrigatório!</small>
+          }
+          @if(formulario.get('email')?.errors?.['email']) {
+            <small style="color: red;">E-mail Inválido.</small>
+          }
+        }
+
       </div>
 
       <div class="form-group">
         <label for="password">Senha</label>
-        <input 
-          type="password" 
-          id="password" 
-          placeholder="Digite sua senha" 
-        />
+        <p><input type="password" formControlName="senha" placeholder="Digite sua senha"/></p>
+        @if(formulario.get('senha')?.touched && formulario.get('senha')?.invalid) {
+          @if(formulario.get('senha')?.errors?.['required']) {
+            <small style="color: red;">A senha é Obrigatória!</small>
+          }
+          @if(formulario.get('senha')?.errors?.['minLength']) {
+            <small style="color: red;">A senha deve ter no mínimo 8 caracteres.</small>
+          }
+        }
       </div>
       <br>
       <!-- Botões de Ação -->
       <div class="actions">
-        <button type="button" class="btn-primary" routerLink="/home">Entrar</button>
+        <button type="submit" (click)="entrar()" class="btn-primary" routerLink="/home">Entrar</button>
       </div>
       <!-- Link redirecionando para o Cadastro -->
        
