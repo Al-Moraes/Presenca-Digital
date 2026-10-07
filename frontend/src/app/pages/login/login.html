@@ -41,7 +41,7 @@
       <br>
       <!-- Botões de Ação -->
       <div class="actions">
-        <button type="submit" (click)="entrar()" class="btn-primary" routerLink="/home">Entrar</button>
+        <button type="submit" (click)="entrar()" class="btn-primary" routerLink="/home" [disabled]="formulario.invalid">Entrar</button>
       </div>
       <!-- Link redirecionando para o Cadastro -->
        
