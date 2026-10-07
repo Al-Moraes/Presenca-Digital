@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { inject } from "@angular/core";
 import { AuthService } from "../../services/auth.service";
-import { clearScreenDown } from "readline";
 
 type Login = {
     email: string;

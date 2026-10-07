@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Justificativa } from './pages/justificativa/justificativa';
 import { Admin } from './pages/admin/admin';
 import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
     { path: 'justificativa', component: Justificativa },
@@ -39,6 +40,7 @@ export const routes: Routes = [
     },
     {
         path: 'admin',
+        canActivate: [adminGuard],
         loadComponent: () =>
             import('./pages/admin/admin').then((m) => m.Admin),
     },

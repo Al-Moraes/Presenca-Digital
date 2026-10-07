@@ -3,6 +3,9 @@ import { RouterLink } from '@angular/router';
 import { FormGroup, Validators} from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthFacade } from '../../core/facades/auth.facade';
+import { inject } from '@angular/core';
 
 @Component({
   imports: [RouterLink, ReactiveFormsModule],
@@ -11,6 +14,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './login.html',
 })
 export class Login {
+
+  private authFacade = inject(AuthFacade);
+  private router = inject(Router);
 
   errologin = signal (false);
   
@@ -28,5 +34,10 @@ export class Login {
     }
     const email = this.formulario.value.email ?? '';
     const senha = this.formulario.value.senha ?? '';
+
+     if (this.authFacade.admin()) {
+      this.router.navigateByUrl('/admin');
+      return;
+    }
   }
 }
