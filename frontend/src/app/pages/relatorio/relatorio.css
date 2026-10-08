@@ -189,7 +189,7 @@ select {
 }
 
 .exportar:hover {
-  background-color: #1987d7;
+  background-color: #1769e0;
   color: white;
 }
 
@@ -209,12 +209,20 @@ select {
 .card span {
   display: block;
   margin-bottom: 10px;
-   color: #7eaef7;
+  color: #4974b6;
 }
 
 .card strong {
   font-size: 28px;
-
+}
+.total strong {
+  color: #4974b6;
+}
+.aprovadas strong {
+  color: #15803d;
+}
+.reprovadas strong {
+  color: #c43b3b;
 }
 
 .total {
