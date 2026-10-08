@@ -65,6 +65,7 @@
         <span>Sair</span>
       </a>
     </div>
+
   </aside>
 
 
@@ -168,15 +169,23 @@
             {{ justificativa.dataFalta }}
           </p>
 
+          <!-- Aviso sobre o prazo de análise -->
+          <p class="justificativa-aviso">
+            Justificativa enviada com sucesso! Aguarde de 5 a 7 dias
+            para análise e aprovação. A resposta será enviada por
+            e-mail.
+          </p>
+
         </div>
 
 
         <div class="card-actions">
 
-          <!-- Ver detalhes -->
+          <!-- Editar justificativa -->
           <button
-            class="btn-icon"
-            title="Ver Detalhes"
+            class="btn-icon edit"
+            title="Editar justificativa"
+            (click)="editarJustificativa(justificativa)"
           >
             <svg
               viewBox="0 0 24 24"
@@ -184,9 +193,10 @@
               stroke="currentColor"
               stroke-width="2"
             >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              <path d="M12 20h9"></path>
+              <path
+                d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+              ></path>
             </svg>
           </button>
 
@@ -194,7 +204,8 @@
           <!-- Visualizar documento -->
           <button
             class="btn-icon view"
-            title="Visualizar"
+            title="Visualizar documento"
+            (click)="visualizarDocumento(justificativa)"
           >
             <svg
               viewBox="0 0 24 24"
@@ -205,20 +216,21 @@
               <path
                 d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
               ></path>
-              <circle cx="12" cy="12" r="3"></circle>
+
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+              ></circle>
             </svg>
           </button>
 
+        </div>
 
-          <!-- Aprovar -->
-          <button
-            class="btn-icon approve"
-            title="Aprovar"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="20 6 9 17 4 12"></polyline>
+      </article>
+
+    </div>
+
+  </main>
+
+</div>
