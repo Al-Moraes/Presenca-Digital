@@ -128,4 +128,4 @@ export class Relatorio implements OnInit {
   exportarPDF() {
     window.print();
   }
-}
+}   

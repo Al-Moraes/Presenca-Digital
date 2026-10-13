@@ -133,15 +133,18 @@
 
         <!-- DATA DA FALTA -->
         <div class="campo">
-          <label for="data">Data da Falta</label>
+  <label for="data">Data da Falta</label>
 
-          <div class="campo-data">
-            <input
-              id="data"
-              type="date"
-              [(ngModel)]="dataFalta">
-          </div>
-        </div>
+  <div class="campo-data">
+    <input
+      id="data"
+      type="date"
+      [min]="minData"
+      [max]="maxData"
+      [(ngModel)]="dataFalta"
+      (change)="validarData()">
+  </div>
+</div>
 
         <!-- DOCUMENTO -->
         <div class="campo">
