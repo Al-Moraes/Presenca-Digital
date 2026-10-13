@@ -35,9 +35,17 @@ export class Login {
     const email = this.formulario.value.email ?? '';
     const senha = this.formulario.value.senha ?? '';
 
-     if (this.authFacade.admin()) {
+    const loginComSucesso = this.authFacade.realizarLogin(email, senha);
+
+    if(loginComSucesso) {
+
+       if (this.authFacade.admin()) {
       this.router.navigateByUrl('/admin');
-      return;
+    }else {
+      this.router.navigateByUrl('/home');
+      }
+    }else {
+      this.errologin.set(true);
     }
   }
 }
