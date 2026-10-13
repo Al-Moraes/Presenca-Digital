@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
@@ -10,7 +10,30 @@ import { RouterLink } from '@angular/router';
   templateUrl: './relatorio.html',
   styleUrl: './relatorio.css'
 })
-export class Relatorio {
+export class Relatorio implements OnInit {
+
+  dataHoraAtual: string = '';
+
+  ngOnInit(): void {
+    this.definirDataHora();
+  }
+
+  private definirDataHora(): void {
+    const agora: Date = new Date();
+
+    const data: string = agora.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+
+    const hora: string = agora.toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    this.dataHoraAtual = `${data} às ${hora}`;
+  }
 
   periodo='Maio/2026';
 
