@@ -46,60 +46,78 @@ export class Relatorio implements OnInit {
 
   mudarPeriodo() {
 
-    if (this.periodo === 'Outubro/2026') {
+    if (this.periodo === 'Janeiro/2026') {
       this.total=63;
       this.aprovadas=30;
       this.reprovadas=25;
       this.pendentes=8;
     }
 
-    else if (this.periodo === 'Setembro/2026') {
+    else if (this.periodo === 'Fevereiro/2026') {
       this.total=144;
       this.aprovadas=90;
       this.reprovadas=50;
       this.pendentes=4;
     }
 
-    if (this.periodo === 'Agosto/2026') {
+    if (this.periodo === 'Março/2026') {
       this.total=20;
       this.aprovadas=12;
       this.reprovadas=7;
       this.pendentes=1;
     }
 
-    else if (this.periodo === 'Julho/2026') {
+    else if (this.periodo === 'Abril/2026') {
       this.total=27;
       this.aprovadas=12;
       this.reprovadas=8;
       this.pendentes=7;
     }
 
-    else if (this.periodo === 'Junho/2026') {
+    else if (this.periodo === 'Maio/2026') {
       this.total=98;
       this.aprovadas=60;
       this.reprovadas=31;
       this.pendentes=7;
     }
 
-    if (this.periodo === 'Maio/2026') {
+    if (this.periodo === 'Junho/2026') {
       this.total=123;
       this.aprovadas=85;
       this.reprovadas=25;
       this.pendentes=13;
     }
 
-    else if (this.periodo === 'Abril/2026') {
+    else if (this.periodo === 'Junho/2026') {
       this.total=110;
       this.aprovadas=72;
       this.reprovadas=28;
       this.pendentes=10;
     }
 
-    else if (this.periodo === 'Março/2026') {
+    else if (this.periodo === 'Julho/2026') {
       this.total=98;
       this.aprovadas=65;
       this.reprovadas=20;
       this.pendentes=13;
+    }
+     if (this.periodo === 'Agosto/2026') {
+      this.total=96;
+      this.aprovadas=36;
+      this.reprovadas=30;
+      this.pendentes=30;
+    }
+    else if (this.periodo === 'Setembro/2026') {
+      this.total=88;
+      this.aprovadas=57;
+      this.reprovadas=22;
+      this.pendentes=9;
+    }
+    else if (this.periodo === 'Outubro/2026') {
+      this.total=78;
+      this.aprovadas=28;
+      this.reprovadas=27;  
+      this.pendentes=23;
     }
   }
 
@@ -110,4 +128,4 @@ export class Relatorio implements OnInit {
   exportarPDF() {
     window.print();
   }
-}
+}   
