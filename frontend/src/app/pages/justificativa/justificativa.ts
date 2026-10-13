@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -11,7 +11,47 @@ import { JustificativaService } from '../../services/justificativa';
   templateUrl: './justificativa.html',
   styleUrls: ['./justificativa.css']
 })
-export class Justificativa {
+export class Justificativa implements OnInit {
+
+  dataFalta: string = '';
+  minData: string = '';
+  maxData: string = '';
+
+  ngOnInit(): void {
+    const hoje = new Date();
+
+    // Data máxima = Hoje
+    this.maxData = this.formatarDataIso(hoje);
+
+    // Data mínima = 14 dias atrás (2 semanas)
+    const limitePassado = new Date();
+    limitePassado.setDate(hoje.getDate() - 14);
+    this.minData = this.formatarDataIso(limitePassado);
+  }
+
+  // Valida se o dia selecionado é sábado (6) ou domingo (0)
+  validarData(): void {
+    if (!this.dataFalta) return;
+
+    // Desmembra YYYY-MM-DD para evitar problemas de fuso horário/UTC
+    const [ano, mes, dia] = this.dataFalta.split('-').map(Number);
+    const dataSelecionada = new Date(ano, mes - 1, dia);
+
+    const diaSemana = dataSelecionada.getDay(); // 0 = Domingo, 6 = Sábado
+
+    if (diaSemana === 0 || diaSemana === 6) {
+      alert('Selecione apenas dias úteis / letivos (segunda a sexta-feira).');
+      this.dataFalta = ''; // Reseta o campo
+    }
+  }
+
+  // Formata o objeto Date para o padrão 'YYYY-MM-DD' exigido pelo <input type="date">
+  private formatarDataIso(data: Date): string {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const dia = String(data.getDate()).padStart(2, '0');
+    return `${ano}-${mes}-${dia}`;
+  }
 
   constructor(
     private router: Router,
@@ -35,7 +75,6 @@ export class Justificativa {
 
   tipoJustificativa = '';
   outraJustificativa = '';
-  dataFalta = '';
   observacoes = '';
 
   arquivoSelecionado: File | null = null;
