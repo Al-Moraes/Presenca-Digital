@@ -65,11 +65,7 @@
         <span>Sair</span>
       </a>
     </div>
-
-    
-
   </aside>
-
 
   <!-- Área de Conteúdo Principal -->
   <main class="main-content">
@@ -84,21 +80,15 @@
         <div class="select-wrapper">
           <select class="custom-select">
             <option value="">Filtrar por status</option>
-            <option value="pendente">Pendente</option>
-            <option value="aprovado">Aprovado</option>
-            <option value="reprovado">Reprovado</option>
+            <option value="pendente">Em análise</option>
+            <option value="aprovado">Aprovadas</option>
+            <option value="reprovado">Indeferidas</option>
           </select>
         </div>
 
         <div class="search-wrapper">
-
-          <svg
-            class="search-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
+          <svg class="search-icon" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
@@ -108,13 +98,10 @@
             placeholder="Buscar solicitações..."
             class="search-input"
           />
-
         </div>
 
       </div>
-
     </header>
-
 
     <!-- Abas de Navegação -->
     <nav class="tabs-bar">
@@ -126,7 +113,7 @@
       <button class="tab-button">
         Pendentes
         <span class="badge">
-          {{ justificativas.length }}
+          {{ justificativas.filter(j => obterStatus(j.status) === 'Em análise').length }}
         </span>
       </button>
 
@@ -135,19 +122,14 @@
       </button>
 
       <button class="tab-button">
-        Reprovados
+        Indeferidos
       </button>
 
     </nav>
 
-
     <!-- Lista de Solicitações -->
     <div class="requests-list">
 
-      <!--
-        As justificativas enviadas serão criadas
-        automaticamente aqui.
-      -->
       <article
         class="request-card"
         *ngFor="let justificativa of justificativas"
@@ -161,75 +143,86 @@
               {{ justificativa.tipoJustificativa }}
             </h3>
 
-            <span class="status-badge pending">
-              Em análise
+            <!-- Status atualizado pela coordenação -->
+            <span
+              class="status-badge"
+              [ngClass]="classeStatus(justificativa.status)"
+            >
+              {{ obterStatus(justificativa.status) }}
             </span>
 
           </div>
 
           <p class="card-meta">
-            {{ justificativa.dataFalta }}
+            Data da falta:
+            {{ justificativa.dataFalta | date:'dd/MM/yyyy' }}
           </p>
 
-          <!-- Aviso sobre o prazo de análise -->
-          <p class="justificativa-aviso">
+          <!-- Mensagem enquanto aguarda análise -->
+          <p
+            class="justificativa-aviso"
+            *ngIf="obterStatus(justificativa.status) === 'Em análise'"
+          >
             Justificativa enviada com sucesso! Aguarde de 5 a 7 dias
             para análise e aprovação. A resposta será enviada por
             e-mail.
           </p>
 
+          <!-- Parecer após aprovação ou indeferimento -->
+          <div
+            class="parecer-coordenacao"
+            *ngIf="obterStatus(justificativa.status) !== 'Em análise'"
+          >
+            <strong>Parecer da Coordenação:</strong>
+
+            <p>
+              {{
+                justificativa.observacaoCoordenacao
+                || 'A coordenação não informou um parecer.'
+              }}
+            </p>
+          </div>
+
         </div>
 
-
+        <!-- Ações -->
         <div class="card-actions">
 
-          <!-- Editar justificativa -->
           <button
             class="btn-icon edit"
             title="Editar justificativa"
             (click)="editarJustificativa(justificativa)"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
+            <svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
               <path d="M12 20h9"></path>
-              <path
-                d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
-              ></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
             </svg>
           </button>
 
-
-          <!-- Visualizar documento -->
           <button
             class="btn-icon view"
             title="Visualizar documento"
             (click)="visualizarDocumento(justificativa)"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
-              ></path>
-
-              <circle
-                cx="12"
-                cy="12"
-                r="3"
-              ></circle>
+            <svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
             </svg>
           </button>
 
         </div>
 
       </article>
+
+      <!-- Estado vazio -->
+      <p
+        *ngIf="justificativas.length === 0"
+        class="empty-message"
+      >
+        Nenhuma solicitação encontrada.
+      </p>
 
     </div>
 

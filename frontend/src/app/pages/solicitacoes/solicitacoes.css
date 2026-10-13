@@ -14,7 +14,7 @@
   cursor: pointer;
 }
 
-/* Estrutura Principal Flexbox (Impede sobreposição) */
+/* Estrutura Principal Flexbox */
 .app-layout {
   display: flex;
   min-height: 100vh;
@@ -22,7 +22,7 @@
   color: #1e293b;
 }
 
-/* Sidebar Fixo na Esquerda */
+/* Sidebar fixo na esquerda */
 .sidebar {
   width: 240px;
   background-color: #ffffff;
@@ -53,7 +53,7 @@
   flex: 1;
 }
 
-/* Item de Navegação (Menu) Consolidado */
+/* Itens de navegação */
 .nav-item {
   display: flex;
   align-items: center;
@@ -69,19 +69,16 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Faz toda a área da caixa ser clicável repassando o evento para o <a> */
 .nav-item > * {
   pointer-events: none;
 }
 
-/* Feedback ao passar o rato no menu (hover + deslize suave) */
 .nav-item:hover {
   background-color: #f1f5f9;
   color: #0f172a;
   transform: translateX(4px);
 }
 
-/* Feedback ao clicar no menu (active) */
 .nav-item:active {
   transform: translateX(2px) scale(0.98);
   background-color: #e2e8f0;
@@ -90,7 +87,7 @@
 .nav-item.active {
   background-color: #eff6ff;
   color: #2563eb;
-  font-weight: 600; 
+  font-weight: 600;
 }
 
 .nav-icon {
@@ -112,14 +109,15 @@
   color: #dc2626;
 }
 
-/* Área de Conteúdo */
+/* Área de conteúdo */
 .main-content {
   flex: 1;
+  min-width: 0;
   padding: 32px 40px;
   max-width: 1200px;
 }
 
-/* Cabeçalho e Filtros */
+/* Cabeçalho e filtros */
 .content-header {
   display: flex;
   justify-content: space-between;
@@ -178,7 +176,7 @@
   color: #94a3b8;
 }
 
-/* Abas de Navegação */
+/* Abas de navegação */
 .tabs-bar {
   display: flex;
   gap: 24px;
@@ -208,7 +206,6 @@
   transform: translateY(1px);
 }
 
-/* Linha inferior animada das Abas */
 .tab-button::after {
   content: '';
   position: absolute;
@@ -247,7 +244,7 @@
   border-radius: 12px;
 }
 
-/* Lista de Cartões */
+/* Lista de solicitações */
 .requests-list {
   display: flex;
   flex-direction: column;
@@ -263,6 +260,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -271,9 +269,15 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
+.card-info {
+  flex: 1;
+  min-width: 0;
+}
+
 .card-title-row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 4px;
 }
@@ -289,8 +293,9 @@
   color: #64748b;
 }
 
-/* Status Badges */
+/* Status das justificativas */
 .status-badge {
+  display: inline-block;
   font-size: 12px;
   font-weight: 600;
   padding: 3px 10px;
@@ -312,9 +317,10 @@
   color: #b91c1c;
 }
 
-/* Botões de Ação dos Cartões com Feedback Visual Completo */
+/* Botões de ação dos cartões */
 .card-actions {
   display: flex;
+  flex-shrink: 0;
   gap: 8px;
 }
 
@@ -337,7 +343,6 @@
   height: 16px;
 }
 
-/* Feedback genérico ao passar o rato */
 .btn-icon:hover {
   background-color: #f8fafc;
   color: #0f172a;
@@ -345,13 +350,11 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
-/* Efeito de clique (compressão) */
 .btn-icon:active {
   transform: translateY(0) scale(0.93);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Cores específicas de Hover para cada ação */
 .btn-icon.view:hover {
   background-color: #eff6ff;
   color: #2563eb;
@@ -370,15 +373,149 @@
   border-color: #fca5a5;
 }
 
-
-/* Aviso exibido em cada solicitação */
+/* Aviso enquanto a justificativa aguarda análise */
 .justificativa-aviso {
   display: block;
   width: 100%;
-  margin: 8px 0 0 0;
+  margin: 8px 0 0;
   padding: 0;
   color: #d32f2f;
   font-size: 13px;
   font-weight: 500;
   line-height: 1.4;
+}
+
+/* Parecer da coordenação após a análise */
+.parecer-coordenacao {
+  margin-top: 10px;
+  padding: 12px 14px;
+  background-color: #f8fafc;
+  border-left: 3px solid #2563eb;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.parecer-coordenacao strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.parecer-coordenacao p {
+  color: #64748b;
+  white-space: pre-wrap;
+}
+
+/* Mensagem quando não houver solicitações */
+.empty-message {
+  padding: 24px;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Responsividade para tablets e celulares */
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 16px;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .sidebar-header {
+    margin-bottom: 16px;
+  }
+
+  .logo-placeholder {
+    width: 130px;
+  }
+
+  .sidebar-nav {
+    gap: 4px;
+  }
+
+  .main-content {
+    width: 100%;
+    max-width: none;
+    padding: 24px 16px;
+  }
+
+  .content-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filters-bar {
+    width: 100%;
+  }
+
+  .select-wrapper,
+  .select-wrapper select,
+  .search-wrapper {
+    width: 100%;
+  }
+
+  .search-wrapper input {
+    width: 100%;
+  }
+
+  .tabs-bar {
+    gap: 16px;
+    overflow-x: auto;
+  }
+
+  .tab-button {
+    flex-shrink: 0;
+  }
+
+  .request-card {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card-info {
+    width: 100%;
+  }
+
+  .card-actions {
+    align-self: flex-end;
+  }
+}
+
+/* Ajustes para celulares pequenos */
+@media (max-width: 480px) {
+  .main-content {
+    padding: 20px 12px;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .request-card {
+    padding: 14px;
+  }
+
+  .card-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .tabs-bar {
+    gap: 14px;
+  }
+
+  .tab-button {
+    font-size: 13px;
+  }
 }

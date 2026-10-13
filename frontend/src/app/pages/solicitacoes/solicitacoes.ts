@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { JustificativaService } from '../../services/justificativa';
 
 @Component({
@@ -10,9 +11,11 @@ import { JustificativaService } from '../../services/justificativa';
   styleUrl: './solicitacoes.css',
   templateUrl: './solicitacoes.html',
 })
-export class Solicitacoes implements OnInit {
+export class Solicitacoes implements OnInit, OnDestroy {
 
   justificativas: any[] = [];
+
+  private inscricao?: Subscription;
 
   constructor(
     private justificativaService: JustificativaService,
@@ -23,12 +26,68 @@ export class Solicitacoes implements OnInit {
     this.carregarJustificativas();
   }
 
+  ngOnDestroy(): void {
+    this.inscricao?.unsubscribe();
+  }
+
+  // Carregar e acompanhar as atualizações das justificativas
   carregarJustificativas(): void {
-    this.justificativaService.getJustificativas().subscribe(
-      (dados) => {
-        this.justificativas = dados;
-      }
-    );
+    this.inscricao?.unsubscribe();
+
+    this.inscricao = this.justificativaService
+      .getJustificativas()
+      .subscribe({
+        next: (dados) => {
+          this.justificativas = dados;
+        },
+        error: (erro) => {
+          console.error(
+            'Erro ao carregar justificativas:',
+            erro
+          );
+        }
+      });
+  }
+
+  // Identificar o status da justificativa
+  obterStatus(status: string | undefined): string {
+    switch (status?.trim().toLowerCase()) {
+
+      case 'aprovada':
+      case 'aprovado':
+        return 'Aprovada';
+
+      case 'indeferida':
+      case 'indeferido':
+      case 'reprovada':
+      case 'reprovado':
+        return 'Indeferida';
+
+      case 'em revisão':
+      case 'em revisao':
+      case 'pendente':
+      case 'em análise':
+      case 'em analise':
+        return 'Em análise';
+
+      default:
+        return status || 'Em análise';
+    }
+  }
+
+  // Definir a cor do status
+  classeStatus(status: string | undefined): string {
+    const statusAtual = this.obterStatus(status);
+
+    if (statusAtual === 'Aprovada') {
+      return 'approved';
+    }
+
+    if (statusAtual === 'Indeferida') {
+      return 'rejected';
+    }
+
+    return 'pending';
   }
 
   // 👁️ Visualizar documento enviado
@@ -46,43 +105,34 @@ export class Solicitacoes implements OnInit {
       return;
     }
 
-    novaAba.document.write(`
-      <html>
-        <head>
-          <title>${justificativa.nomeArquivo || 'Documento'}</title>
-          <style>
-            body {
-              margin: 0;
-              padding: 0;
-              background: #f5f5f5;
-            }
+    const arquivo = justificativa.arquivoBase64;
 
-            iframe {
-              width: 100%;
-              height: 100vh;
-              border: none;
-            }
+    if (arquivo.startsWith('data:image/')) {
+      const imagem = novaAba.document.createElement('img');
 
-            img {
-              display: block;
-              max-width: 100%;
-              max-height: 100vh;
-              margin: auto;
-            }
-          </style>
-        </head>
+      imagem.src = arquivo;
+      imagem.alt = justificativa.nomeArquivo || 'Documento enviado';
+      imagem.style.display = 'block';
+      imagem.style.maxWidth = '100%';
+      imagem.style.maxHeight = '100vh';
+      imagem.style.margin = 'auto';
 
-        <body>
-          ${
-            justificativa.arquivoBase64.startsWith('data:image')
-              ? `<img src="${justificativa.arquivoBase64}" />`
-              : `<iframe src="${justificativa.arquivoBase64}"></iframe>`
-          }
-        </body>
-      </html>
-    `);
+      novaAba.document.body.style.margin = '0';
+      novaAba.document.body.style.background = '#f5f5f5';
+      novaAba.document.body.appendChild(imagem);
 
-    novaAba.document.close();
+    } else {
+      const iframe = novaAba.document.createElement('iframe');
+
+      iframe.src = arquivo;
+      iframe.title = justificativa.nomeArquivo || 'Documento enviado';
+      iframe.style.width = '100%';
+      iframe.style.height = '100vh';
+      iframe.style.border = 'none';
+
+      novaAba.document.body.style.margin = '0';
+      novaAba.document.body.appendChild(iframe);
+    }
   }
 
   // ✏️ Editar justificativa
