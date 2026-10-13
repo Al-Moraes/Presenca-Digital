@@ -22,7 +22,7 @@ export class Login {
   
   formulario = new FormGroup ({
     email: new FormControl('', [Validators.required, Validators.email]),
-    senha: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    senha: new FormControl('', [Validators.required, Validators.minLength(3)]),
   });
 
   entrar(){
