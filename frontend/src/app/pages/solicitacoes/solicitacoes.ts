@@ -1,19 +1,29 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JustificativaService } from '../../services/justificativa';
 
+type FiltroSolicitacoes =
+  | 'todas'
+  | 'pendentes'
+  | 'aprovados'
+  | 'indeferidos';
+
 @Component({
   selector: 'app-solicitacoes',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   styleUrl: './solicitacoes.css',
   templateUrl: './solicitacoes.html',
 })
 export class Solicitacoes implements OnInit, OnDestroy {
 
   justificativas: any[] = [];
+
+  filtroAtivo: FiltroSolicitacoes = 'todas';
+  termoBusca = '';
 
   private inscricao?: Subscription;
 
@@ -49,7 +59,12 @@ export class Solicitacoes implements OnInit, OnDestroy {
       });
   }
 
-  // Identificar o status da justificativa
+  // Selecionar a aba desejada
+  selecionarFiltro(filtro: FiltroSolicitacoes): void {
+    this.filtroAtivo = filtro;
+  }
+
+  // Normalizar o status recebido do serviço
   obterStatus(status: string | undefined): string {
     switch (status?.trim().toLowerCase()) {
 
@@ -75,6 +90,65 @@ export class Solicitacoes implements OnInit, OnDestroy {
     }
   }
 
+  // Retornar somente as solicitações da aba selecionada
+  get justificativasFiltradas(): any[] {
+    const termo = this.termoBusca.trim().toLowerCase();
+
+    return this.justificativas.filter((justificativa) => {
+      const status = this.obterStatus(justificativa.status);
+
+      let correspondeStatus = true;
+
+      switch (this.filtroAtivo) {
+        case 'pendentes':
+          correspondeStatus = status === 'Em análise';
+          break;
+
+        case 'aprovados':
+          correspondeStatus = status === 'Aprovada';
+          break;
+
+        case 'indeferidos':
+          correspondeStatus = status === 'Indeferida';
+          break;
+
+        case 'todas':
+          correspondeStatus = true;
+          break;
+      }
+
+      const correspondeBusca =
+        !termo ||
+        String(justificativa.tipoJustificativa ?? '')
+          .toLowerCase()
+          .includes(termo) ||
+        String(justificativa.dataFalta ?? '')
+          .toLowerCase()
+          .includes(termo);
+
+      return correspondeStatus && correspondeBusca;
+    });
+  }
+
+  // Contagem por status
+  get quantidadePendentes(): number {
+    return this.justificativas.filter(
+      (j) => this.obterStatus(j.status) === 'Em análise'
+    ).length;
+  }
+
+  get quantidadeAprovados(): number {
+    return this.justificativas.filter(
+      (j) => this.obterStatus(j.status) === 'Aprovada'
+    ).length;
+  }
+
+  get quantidadeIndeferidos(): number {
+    return this.justificativas.filter(
+      (j) => this.obterStatus(j.status) === 'Indeferida'
+    ).length;
+  }
+
   // Definir a cor do status
   classeStatus(status: string | undefined): string {
     const statusAtual = this.obterStatus(status);
@@ -90,9 +164,8 @@ export class Solicitacoes implements OnInit, OnDestroy {
     return 'pending';
   }
 
-  // 👁️ Visualizar documento enviado
+  // Visualizar documento enviado
   visualizarDocumento(justificativa: any): void {
-
     if (!justificativa.arquivoBase64) {
       alert('Nenhum documento foi encontrado.');
       return;
@@ -135,9 +208,8 @@ export class Solicitacoes implements OnInit, OnDestroy {
     }
   }
 
-  // ✏️ Editar justificativa
+  // Editar justificativa
   editarJustificativa(justificativa: any): void {
-
     this.router.navigate(
       ['/justificativa'],
       {

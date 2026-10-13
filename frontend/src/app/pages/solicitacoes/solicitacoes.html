@@ -12,7 +12,6 @@
     </div>
 
     <nav class="sidebar-nav">
-
       <a class="nav-item" routerLink="/home">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2">
@@ -51,7 +50,6 @@
         </svg>
         <span>Histórico</span>
       </a>
-
     </nav>
 
     <div class="sidebar-footer">
@@ -70,19 +68,19 @@
   <!-- Área de Conteúdo Principal -->
   <main class="main-content">
 
-    <!-- Cabeçalho e Filtros -->
     <header class="content-header">
-
       <h1 class="page-title">Solicitações</h1>
 
       <div class="filters-bar">
-
         <div class="select-wrapper">
-          <select class="custom-select">
-            <option value="">Filtrar por status</option>
-            <option value="pendente">Em análise</option>
-            <option value="aprovado">Aprovadas</option>
-            <option value="reprovado">Indeferidas</option>
+          <select
+            class="custom-select"
+            (change)="selecionarFiltro($any($event.target).value)"
+          >
+            <option value="todas">Filtrar por status</option>
+            <option value="pendentes">Em análise</option>
+            <option value="aprovados">Aprovadas</option>
+            <option value="indeferidos">Indeferidas</option>
           </select>
         </div>
 
@@ -97,60 +95,76 @@
             type="text"
             placeholder="Buscar solicitações..."
             class="search-input"
+            [(ngModel)]="termoBusca"
           />
         </div>
-
       </div>
     </header>
 
-    <!-- Abas de Navegação -->
+    <!-- Abas funcionais -->
     <nav class="tabs-bar">
 
-      <button class="tab-button active">
+      <button
+        type="button"
+        class="tab-button"
+        [class.active]="filtroAtivo === 'todas'"
+        (click)="selecionarFiltro('todas')"
+      >
         Todas
       </button>
 
-      <button class="tab-button">
+      <button
+        type="button"
+        class="tab-button"
+        [class.active]="filtroAtivo === 'pendentes'"
+        (click)="selecionarFiltro('pendentes')"
+      >
         Pendentes
-        <span class="badge">
-          {{ justificativas.filter(j => obterStatus(j.status) === 'Em análise').length }}
-        </span>
+        <span class="badge">{{ quantidadePendentes }}</span>
       </button>
 
-      <button class="tab-button">
+      <button
+        type="button"
+        class="tab-button"
+        [class.active]="filtroAtivo === 'aprovados'"
+        (click)="selecionarFiltro('aprovados')"
+      >
         Aprovados
+        <span class="badge">{{ quantidadeAprovados }}</span>
       </button>
 
-      <button class="tab-button">
+      <button
+        type="button"
+        class="tab-button"
+        [class.active]="filtroAtivo === 'indeferidos'"
+        (click)="selecionarFiltro('indeferidos')"
+      >
         Indeferidos
+        <span class="badge">{{ quantidadeIndeferidos }}</span>
       </button>
 
     </nav>
 
-    <!-- Lista de Solicitações -->
+    <!-- Lista filtrada -->
     <div class="requests-list">
 
       <article
         class="request-card"
-        *ngFor="let justificativa of justificativas"
+        *ngFor="let justificativa of justificativasFiltradas"
       >
-
         <div class="card-info">
 
           <div class="card-title-row">
-
             <h3 class="card-title">
               {{ justificativa.tipoJustificativa }}
             </h3>
 
-            <!-- Status atualizado pela coordenação -->
             <span
               class="status-badge"
               [ngClass]="classeStatus(justificativa.status)"
             >
               {{ obterStatus(justificativa.status) }}
             </span>
-
           </div>
 
           <p class="card-meta">
@@ -158,23 +172,21 @@
             {{ justificativa.dataFalta | date:'dd/MM/yyyy' }}
           </p>
 
-          <!-- Mensagem enquanto aguarda análise -->
+          <!-- Aviso enquanto aguarda análise -->
           <p
             class="justificativa-aviso"
             *ngIf="obterStatus(justificativa.status) === 'Em análise'"
           >
             Justificativa enviada com sucesso! Aguarde de 5 a 7 dias
-            para análise e aprovação. A resposta será enviada por
-            e-mail.
+            para análise e aprovação. A resposta será enviada por e-mail.
           </p>
 
-          <!-- Parecer após aprovação ou indeferimento -->
+          <!-- Parecer da coordenação -->
           <div
             class="parecer-coordenacao"
             *ngIf="obterStatus(justificativa.status) !== 'Em análise'"
           >
             <strong>Parecer da Coordenação:</strong>
-
             <p>
               {{
                 justificativa.observacaoCoordenacao
@@ -185,11 +197,10 @@
 
         </div>
 
-        <!-- Ações -->
         <div class="card-actions">
-
           <button
             class="btn-icon edit"
+            type="button"
             title="Editar justificativa"
             (click)="editarJustificativa(justificativa)"
           >
@@ -202,6 +213,7 @@
 
           <button
             class="btn-icon view"
+            type="button"
             title="Visualizar documento"
             (click)="visualizarDocumento(justificativa)"
           >
@@ -211,21 +223,17 @@
               <circle cx="12" cy="12" r="3"></circle>
             </svg>
           </button>
-
         </div>
-
       </article>
 
       <!-- Estado vazio -->
       <p
-        *ngIf="justificativas.length === 0"
+        *ngIf="justificativasFiltradas.length === 0"
         class="empty-message"
       >
-        Nenhuma solicitação encontrada.
+        Nenhuma solicitação encontrada nesta categoria.
       </p>
 
     </div>
-
   </main>
-
 </div>
