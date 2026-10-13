@@ -15,7 +15,7 @@ export class Home {
   private authService = inject(AuthService);
 
   nomeUsuario = computed(() => {
-    const email = this.authService.usuarioAtual()?.email;
+    const email = this.authService.usuarioAtual()?.email; 
 
     if (!email) {
       return 'Usuário';
