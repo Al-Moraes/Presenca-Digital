@@ -116,7 +116,7 @@ export class Relatorio implements OnInit {
     else if (this.periodo === 'Outubro/2026') {
       this.total=78;
       this.aprovadas=28;
-      this.reprovadas=27; 
+      this.reprovadas=27;  
       this.pendentes=23;
     }
   }
