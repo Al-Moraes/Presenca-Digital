@@ -6,13 +6,13 @@ import { Justificativa, StatusJustificativa } from '../../models/justificativa';
 import { JustificativaService } from '../../services/justificativa';
 import { computed } from '@angular/core';
 import { AuthFacade } from '../../core/facades/auth.facade';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './admin.html',
   styleUrls: ['./admin.css']
 })
