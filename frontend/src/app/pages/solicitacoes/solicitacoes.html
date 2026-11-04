@@ -75,6 +75,7 @@
         <div class="select-wrapper">
           <select
             class="custom-select"
+            [value]="filtroAtivo"
             (change)="selecionarFiltro($any($event.target).value)"
           >
             <option value="todas">Filtrar por status</option>
@@ -82,21 +83,6 @@
             <option value="aprovados">Aprovadas</option>
             <option value="indeferidos">Indeferidas</option>
           </select>
-        </div>
-
-        <div class="search-wrapper">
-          <svg class="search-icon" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-
-          <input
-            type="text"
-            placeholder="Buscar solicitações..."
-            class="search-input"
-            [(ngModel)]="termoBusca"
-          />
         </div>
       </div>
     </header>
