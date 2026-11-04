@@ -1,4 +1,3 @@
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -69,28 +68,46 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
   // Identificar o status da solicitação
   obterStatus(status: string | undefined): string {
-
     const valor = this.normalizarTexto(status);
 
     if (
-      ['aprovada', 'aprovado', 'aprovadas', 'aprovados',
-       'deferida', 'deferido'].includes(valor)
+      [
+        'aprovada',
+        'aprovado',
+        'aprovadas',
+        'aprovados',
+        'deferida',
+        'deferido'
+      ].includes(valor)
     ) {
       return 'Aprovada';
     }
 
     if (
-      ['indeferida', 'indeferido', 'indeferidas',
-       'indeferidos', 'reprovada', 'reprovado',
-       'recusada', 'recusado'].includes(valor)
+      [
+        'indeferida',
+        'indeferido',
+        'indeferidas',
+        'indeferidos',
+        'reprovada',
+        'reprovado',
+        'recusada',
+        'recusado'
+      ].includes(valor)
     ) {
       return 'Indeferida';
     }
 
     if (
-      ['pendente', 'pendentes', 'em analise',
-       'em revisao', 'aguardando', 'aguardando analise',
-       'em processamento'].includes(valor)
+      [
+        'pendente',
+        'pendentes',
+        'em analise',
+        'em revisao',
+        'aguardando',
+        'aguardando analise',
+        'em processamento'
+      ].includes(valor)
     ) {
       return 'Em análise';
     }
@@ -103,60 +120,39 @@ export class Solicitacoes implements OnInit, OnDestroy {
     this.filtroAtivo = filtro;
   }
 
-<<<<<<< HEAD
-  // Normalizar o status recebido do serviço
-  obterStatus(status: string | undefined): string {
-    switch (status?.trim().toLowerCase()) {
+  // Formatar data para pesquisa no formato brasileiro
+  private formatarData(data: any): string {
+    if (!data) return '';
 
-      case 'aprovada':
-      case 'aprovado':
-        return 'Aprovado';
+    const dataObj = new Date(data);
 
-      case 'indeferida':
-      case 'indeferido':
-      case 'reprovada':
-      case 'reprovado':
-        return 'Reprovado';
-
-      case 'em revisão':
-      case 'em revisao':
-      case 'pendente':
-      case 'em análise':
-      case 'em analise':
-        return 'Em análise';
-
-      default:
-        return status || 'Em análise';
+    if (isNaN(dataObj.getTime())) {
+      return '';
     }
+
+    return dataObj.toLocaleDateString('pt-BR');
   }
 
-  // Retornar somente as solicitações da aba selecionada
-=======
   // Filtrar solicitações por aba e pesquisa
->>>>>>> 8221eafb9e6b5c26007c0f29de0f2eb9ebfe30fe
   get justificativasFiltradas(): any[] {
-
     const termo = this.normalizarTexto(this.termoBusca);
 
     return this.justificativas.filter((justificativa) => {
-
       const status = this.obterStatus(justificativa.status);
 
-      // Verificar a aba selecionada
       let correspondeStatus = true;
 
       switch (this.filtroAtivo) {
-
         case 'pendentes':
-          correspondeStatus = status === 'Pendentes';
+          correspondeStatus = status === 'Em análise';
           break;
 
         case 'aprovados':
-          correspondeStatus = status === 'Aprovado';
+          correspondeStatus = status === 'Aprovada';
           break;
 
         case 'indeferidos':
-          correspondeStatus = status === 'Reprovado';
+          correspondeStatus = status === 'Indeferida';
           break;
 
         case 'todas':
@@ -164,7 +160,6 @@ export class Solicitacoes implements OnInit, OnDestroy {
           break;
       }
 
-      // Pesquisar em diferentes informações
       const camposPesquisa = [
         justificativa.tipoJustificativa,
         justificativa.status,
@@ -182,54 +177,6 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
       return correspondeStatus && correspondeBusca;
     });
-  }
-
-<<<<<<< HEAD
-  // Contagem por status
-  get pendentes(): number {
-    return this.justificativas.filter(
-      (j) => this.obterStatus(j.status) === 'Pendentes'
-    ).length;
-  }
-
-  get aprovados(): number {
-    return this.justificativas.filter(
-      (j) => this.obterStatus(j.status) === 'Aprovado'
-    ).length;
-  }
-
-  get reprovados(): number {
-    return this.justificativas.filter(
-      (j) => this.obterStatus(j.status) === 'Reprovado'
-    ).length;
-  }
-
-  // NOVO: Retornar as 3 solicitações mais recentes
-  get ultimasJustificativas(): any[] {
-    return [...this.justificativas]
-      .sort((a, b) => {
-        const dataA = new Date(a.dataFalta).getTime();
-        const dataB = new Date(b.dataFalta).getTime();
-
-        return dataB - dataA;
-      })
-      .slice(0, 3);
-  }
-
-  // Definir a cor do status
-=======
-  // Formatar data para pesquisa no formato brasileiro
-  private formatarData(data: any): string {
-
-    if (!data) return '';
-
-    const dataObj = new Date(data);
-
-    if (isNaN(dataObj.getTime())) {
-      return '';
-    }
-
-    return dataObj.toLocaleDateString('pt-BR');
   }
 
   // Contagem de solicitações pendentes
@@ -253,10 +200,20 @@ export class Solicitacoes implements OnInit, OnDestroy {
     ).length;
   }
 
-  // Definir classe visual do status
->>>>>>> 8221eafb9e6b5c26007c0f29de0f2eb9ebfe30fe
-  classeStatus(status: string | undefined): string {
+  // Retornar as 3 solicitações mais recentes
+  get ultimasJustificativas(): any[] {
+    return [...this.justificativas]
+      .sort((a, b) => {
+        const dataA = new Date(a.dataFalta).getTime();
+        const dataB = new Date(b.dataFalta).getTime();
 
+        return dataB - dataA;
+      })
+      .slice(0, 3);
+  }
+
+  // Definir classe visual do status
+  classeStatus(status: string | undefined): string {
     const statusAtual = this.obterStatus(status);
 
     if (statusAtual === 'Aprovada') {
@@ -272,7 +229,6 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
   // Visualizar documento enviado
   visualizarDocumento(justificativa: any): void {
-
     if (!justificativa.arquivoBase64) {
       alert('Nenhum documento foi encontrado.');
       return;
@@ -288,7 +244,6 @@ export class Solicitacoes implements OnInit, OnDestroy {
     const arquivo = justificativa.arquivoBase64;
 
     if (arquivo.startsWith('data:image/')) {
-
       const imagem = novaAba.document.createElement('img');
 
       imagem.src = arquivo;
@@ -303,7 +258,6 @@ export class Solicitacoes implements OnInit, OnDestroy {
       novaAba.document.body.appendChild(imagem);
 
     } else {
-
       const iframe = novaAba.document.createElement('iframe');
 
       iframe.src = arquivo;
@@ -319,7 +273,6 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
   // Editar justificativa
   editarJustificativa(justificativa: any): void {
-
     this.router.navigate(
       ['/justificativa'],
       {
