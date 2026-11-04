@@ -70,13 +70,13 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
       case 'aprovada':
       case 'aprovado':
-        return 'Aprovada';
+        return 'Aprovado';
 
       case 'indeferida':
       case 'indeferido':
       case 'reprovada':
       case 'reprovado':
-        return 'Indeferida';
+        return 'Reprovado';
 
       case 'em revisão':
       case 'em revisao':
@@ -101,15 +101,15 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
       switch (this.filtroAtivo) {
         case 'pendentes':
-          correspondeStatus = status === 'Em análise';
+          correspondeStatus = status === 'Pendentes';
           break;
 
         case 'aprovados':
-          correspondeStatus = status === 'Aprovada';
+          correspondeStatus = status === 'Aprovado';
           break;
 
         case 'indeferidos':
-          correspondeStatus = status === 'Indeferida';
+          correspondeStatus = status === 'Reprovado';
           break;
 
         case 'todas':
@@ -131,22 +131,34 @@ export class Solicitacoes implements OnInit, OnDestroy {
   }
 
   // Contagem por status
-  get quantidadePendentes(): number {
+  get pendentes(): number {
     return this.justificativas.filter(
-      (j) => this.obterStatus(j.status) === 'Em análise'
+      (j) => this.obterStatus(j.status) === 'Pendentes'
     ).length;
   }
 
-  get quantidadeAprovados(): number {
+  get aprovados(): number {
     return this.justificativas.filter(
-      (j) => this.obterStatus(j.status) === 'Aprovada'
+      (j) => this.obterStatus(j.status) === 'Aprovado'
     ).length;
   }
 
-  get quantidadeIndeferidos(): number {
+  get reprovados(): number {
     return this.justificativas.filter(
-      (j) => this.obterStatus(j.status) === 'Indeferida'
+      (j) => this.obterStatus(j.status) === 'Reprovado'
     ).length;
+  }
+
+  // NOVO: Retornar as 3 solicitações mais recentes
+  get ultimasJustificativas(): any[] {
+    return [...this.justificativas]
+      .sort((a, b) => {
+        const dataA = new Date(a.dataFalta).getTime();
+        const dataB = new Date(b.dataFalta).getTime();
+
+        return dataB - dataA;
+      })
+      .slice(0, 3);
   }
 
   // Definir a cor do status
