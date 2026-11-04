@@ -1,3 +1,4 @@
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -40,7 +41,7 @@ export class Solicitacoes implements OnInit, OnDestroy {
     this.inscricao?.unsubscribe();
   }
 
-  // Carregar e acompanhar as atualizações das justificativas
+  // Carregar solicitações do serviço
   carregarJustificativas(): void {
     this.inscricao?.unsubscribe();
 
@@ -48,22 +49,61 @@ export class Solicitacoes implements OnInit, OnDestroy {
       .getJustificativas()
       .subscribe({
         next: (dados) => {
-          this.justificativas = dados;
+          this.justificativas = dados || [];
         },
         error: (erro) => {
-          console.error(
-            'Erro ao carregar justificativas:',
-            erro
-          );
+          console.error('Erro ao carregar justificativas:', erro);
+          this.justificativas = [];
         }
       });
   }
 
-  // Selecionar a aba desejada
+  // Normalizar textos para comparação
+  private normalizarTexto(valor: any): string {
+    return String(valor ?? '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim()
+      .toLowerCase();
+  }
+
+  // Identificar o status da solicitação
+  obterStatus(status: string | undefined): string {
+
+    const valor = this.normalizarTexto(status);
+
+    if (
+      ['aprovada', 'aprovado', 'aprovadas', 'aprovados',
+       'deferida', 'deferido'].includes(valor)
+    ) {
+      return 'Aprovada';
+    }
+
+    if (
+      ['indeferida', 'indeferido', 'indeferidas',
+       'indeferidos', 'reprovada', 'reprovado',
+       'recusada', 'recusado'].includes(valor)
+    ) {
+      return 'Indeferida';
+    }
+
+    if (
+      ['pendente', 'pendentes', 'em analise',
+       'em revisao', 'aguardando', 'aguardando analise',
+       'em processamento'].includes(valor)
+    ) {
+      return 'Em análise';
+    }
+
+    return status || 'Em análise';
+  }
+
+  // Selecionar filtro
   selecionarFiltro(filtro: FiltroSolicitacoes): void {
     this.filtroAtivo = filtro;
   }
 
+<<<<<<< HEAD
   // Normalizar o status recebido do serviço
   obterStatus(status: string | undefined): string {
     switch (status?.trim().toLowerCase()) {
@@ -91,15 +131,22 @@ export class Solicitacoes implements OnInit, OnDestroy {
   }
 
   // Retornar somente as solicitações da aba selecionada
+=======
+  // Filtrar solicitações por aba e pesquisa
+>>>>>>> 8221eafb9e6b5c26007c0f29de0f2eb9ebfe30fe
   get justificativasFiltradas(): any[] {
-    const termo = this.termoBusca.trim().toLowerCase();
+
+    const termo = this.normalizarTexto(this.termoBusca);
 
     return this.justificativas.filter((justificativa) => {
+
       const status = this.obterStatus(justificativa.status);
 
+      // Verificar a aba selecionada
       let correspondeStatus = true;
 
       switch (this.filtroAtivo) {
+
         case 'pendentes':
           correspondeStatus = status === 'Pendentes';
           break;
@@ -117,19 +164,27 @@ export class Solicitacoes implements OnInit, OnDestroy {
           break;
       }
 
+      // Pesquisar em diferentes informações
+      const camposPesquisa = [
+        justificativa.tipoJustificativa,
+        justificativa.status,
+        justificativa.dataFalta,
+        justificativa.observacaoCoordenacao,
+        justificativa.nomeArquivo
+      ];
+
       const correspondeBusca =
         !termo ||
-        String(justificativa.tipoJustificativa ?? '')
-          .toLowerCase()
-          .includes(termo) ||
-        String(justificativa.dataFalta ?? '')
-          .toLowerCase()
-          .includes(termo);
+        camposPesquisa.some(campo =>
+          this.normalizarTexto(campo).includes(termo)
+        ) ||
+        this.formatarData(justificativa.dataFalta).includes(termo);
 
       return correspondeStatus && correspondeBusca;
     });
   }
 
+<<<<<<< HEAD
   // Contagem por status
   get pendentes(): number {
     return this.justificativas.filter(
@@ -162,7 +217,46 @@ export class Solicitacoes implements OnInit, OnDestroy {
   }
 
   // Definir a cor do status
+=======
+  // Formatar data para pesquisa no formato brasileiro
+  private formatarData(data: any): string {
+
+    if (!data) return '';
+
+    const dataObj = new Date(data);
+
+    if (isNaN(dataObj.getTime())) {
+      return '';
+    }
+
+    return dataObj.toLocaleDateString('pt-BR');
+  }
+
+  // Contagem de solicitações pendentes
+  get quantidadePendentes(): number {
+    return this.justificativas.filter(
+      j => this.obterStatus(j.status) === 'Em análise'
+    ).length;
+  }
+
+  // Contagem de solicitações aprovadas
+  get quantidadeAprovados(): number {
+    return this.justificativas.filter(
+      j => this.obterStatus(j.status) === 'Aprovada'
+    ).length;
+  }
+
+  // Contagem de solicitações indeferidas
+  get quantidadeIndeferidos(): number {
+    return this.justificativas.filter(
+      j => this.obterStatus(j.status) === 'Indeferida'
+    ).length;
+  }
+
+  // Definir classe visual do status
+>>>>>>> 8221eafb9e6b5c26007c0f29de0f2eb9ebfe30fe
   classeStatus(status: string | undefined): string {
+
     const statusAtual = this.obterStatus(status);
 
     if (statusAtual === 'Aprovada') {
@@ -178,6 +272,7 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
   // Visualizar documento enviado
   visualizarDocumento(justificativa: any): void {
+
     if (!justificativa.arquivoBase64) {
       alert('Nenhum documento foi encontrado.');
       return;
@@ -193,6 +288,7 @@ export class Solicitacoes implements OnInit, OnDestroy {
     const arquivo = justificativa.arquivoBase64;
 
     if (arquivo.startsWith('data:image/')) {
+
       const imagem = novaAba.document.createElement('img');
 
       imagem.src = arquivo;
@@ -207,6 +303,7 @@ export class Solicitacoes implements OnInit, OnDestroy {
       novaAba.document.body.appendChild(imagem);
 
     } else {
+
       const iframe = novaAba.document.createElement('iframe');
 
       iframe.src = arquivo;
@@ -222,6 +319,7 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
   // Editar justificativa
   editarJustificativa(justificativa: any): void {
+
     this.router.navigate(
       ['/justificativa'],
       {
