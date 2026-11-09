@@ -9,7 +9,7 @@ type FiltroSolicitacoes =
   | 'todas'
   | 'pendentes'
   | 'aprovados'
-  | 'indeferidos';
+  | 'indeferidos'; 
 
 @Component({
   selector: 'app-solicitacoes',
