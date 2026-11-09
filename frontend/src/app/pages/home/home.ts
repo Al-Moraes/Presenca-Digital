@@ -8,13 +8,13 @@ import {
 
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
-
+import { DatePipe } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { JustificativaService } from '../../services/justificativa';
 
 @Component({
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   selector: 'app-home',
   styleUrl: './home.css',
   templateUrl: './home.html',
@@ -110,12 +110,12 @@ export class Home implements OnInit, OnDestroy {
   }
 
   // Mostrar as três últimas justificativas
-  get ultimasJustificativas(): any[] {
-    return [...this.justificativas]
-      .sort((a, b) =>
-        new Date(b.dataFalta).getTime() -
-        new Date(a.dataFalta).getTime()
-      )
-      .slice(0, 3);
-  }
+get ultimasJustificativas(): any[] {
+  return [...this.justificativas]
+    .sort((a, b) =>
+      new Date(b.dataEnvio).getTime() -
+      new Date(a.dataEnvio).getTime()
+    )
+    .slice(0, 3);
+}
 }

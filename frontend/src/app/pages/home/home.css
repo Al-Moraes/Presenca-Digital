@@ -553,3 +553,11 @@
   width: 20px;
   height: 20px;
 }
+
+.motivo-justificativa {
+  color: #666;
+  font-size: 13px;
+  margin-top: 8px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}

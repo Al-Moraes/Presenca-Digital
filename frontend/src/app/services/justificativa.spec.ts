@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Justificativa } from './justificativa';
+import { Justificativa } from '../pages/justificativa/justificativa';
 
 describe('Justificativa', () => {
   let service: Justificativa;

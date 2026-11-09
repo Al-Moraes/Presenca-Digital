@@ -131,56 +131,58 @@
       </div>
 
       <!-- LISTA DINÂMICA -->
-      <div class="lista-solicitacoes">
+     <div class="lista-solicitacoes">
 
-        @for (
-          solicitacao of ultimasJustificativas;
-          track $index
-        ) {
+  @for (solicitacao of ultimasJustificativas; track solicitacao.id) {
 
-          <div class="solicitacao">
+    <div class="solicitacao">
 
-            <div class="icone-status"
-              [class.pendente]="solicitacao.status === 'Pendente'"
-              [class.aprovado]="solicitacao.status === 'Aprovado'"
-              [class.recusado]="solicitacao.status === 'Reprovado'">
+      <!-- ÍCONE DO STATUS -->
+      <div class="icone-status"
+        [class.pendente]="solicitacao.status === 'Pendente'"
+        [class.aprovado]="solicitacao.status === 'Aprovado' || solicitacao.status === 'Aprovada'"
+        [class.recusado]="solicitacao.status === 'Reprovado' || solicitacao.status === 'Indeferida'">
 
-              @if (solicitacao.status === 'Pendente') {
-                ◷
-              }
-
-              @else if (solicitacao.status === 'Aprovado') {
-                ✓
-              }
-
-              @else {
-                ×
-              }
-
-            </div>
-
-            <div class="informacoes">
-
-              <strong>
-                {{ solicitacao.tipo }}
-              </strong>
-
-              <span>
-                {{ solicitacao.data }} - {{ solicitacao.status }}
-              </span>
-
-            </div>
-
-          </div>
-
-        } @empty {
-
-          <p>Nenhuma solicitação cadastrada.</p>
-
+        @if (solicitacao.status === 'Pendente') {
+          ◷
+        }
+        @else if (solicitacao.status === 'Aprovado' || solicitacao.status === 'Aprovada') {
+          ✓
+        }
+        @else {
+          ×
         }
 
       </div>
 
+      <!-- INFORMAÇÕES DA SOLICITAÇÃO -->
+<div class="informacoes">
+
+  <strong>{{ solicitacao.tipo }}</strong>
+
+  <span>
+    Data: {{ solicitacao.dataEnvio | date:'dd/MM/yyyy' }}
+  </span>
+
+  <span>
+    Status: {{ obterStatus(solicitacao.status) }}
+  </span>
+
+  <p class="motivo-justificativa">
+    Motivo: {{ solicitacao.motivo }}
+  </p>
+
+</div>
+
+    </div>
+
+  } @empty {
+
+    <p>Nenhuma solicitação cadastrada.</p>
+
+  }
+
+</div>
     </section>
 
   </main>
