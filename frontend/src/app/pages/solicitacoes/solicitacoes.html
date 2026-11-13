@@ -157,6 +157,10 @@
             Data da falta:
             {{ justificativa.dataFalta | date:'dd/MM/yyyy' }}
           </p>
+          <p class="card-meta">
+            <strong>Motivo</strong>
+            {{obterMotivo(justificativa)}}
+          </p>
 
           <!-- Aviso enquanto aguarda análise -->
           <p

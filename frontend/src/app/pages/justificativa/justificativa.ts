@@ -17,46 +17,43 @@ export class Justificativa implements OnInit {
   minData: string = '';
   maxData: string = '';
 
-  ngOnInit(): void {
-    const hoje = new Date();
-
-    // Data máxima = Hoje
-    this.maxData = this.formatarDataIso(hoje);
-
-    // Data mínima = 14 dias atrás (2 semanas)
-    const limitePassado = new Date();
-    limitePassado.setDate(hoje.getDate() - 14);
-    this.minData = this.formatarDataIso(limitePassado);
-  }
-
-  // Valida se o dia selecionado é sábado (6) ou domingo (0)
-  validarData(): void {
-    if (!this.dataFalta) return;
-
-    // Desmembra YYYY-MM-DD para evitar problemas de fuso horário/UTC
-    const [ano, mes, dia] = this.dataFalta.split('-').map(Number);
-    const dataSelecionada = new Date(ano, mes - 1, dia);
-
-    const diaSemana = dataSelecionada.getDay(); // 0 = Domingo, 6 = Sábado
-
-    if (diaSemana === 0 || diaSemana === 6) {
-      alert('Selecione apenas dias úteis / letivos (segunda a sexta-feira).');
-      this.dataFalta = ''; // Reseta o campo
-    }
-  }
-
-  // Formata o objeto Date para o padrão 'YYYY-MM-DD' exigido pelo <input type="date">
-  private formatarDataIso(data: Date): string {
-    const ano = data.getFullYear();
-    const mes = String(data.getMonth() + 1).padStart(2, '0');
-    const dia = String(data.getDate()).padStart(2, '0');
-    return `${ano}-${mes}-${dia}`;
-  }
-
   constructor(
     private router: Router,
     private justificativaService: JustificativaService
   ) {}
+
+  ngOnInit(): void {
+    const hoje = new Date();
+
+    this.maxData = this.formatarDataIso(hoje);
+
+    const limitePassado = new Date();
+    limitePassado.setDate(hoje.getDate() - 14);
+
+    this.minData = this.formatarDataIso(limitePassado);
+  }
+
+  validarData(): void {
+    if (!this.dataFalta) return;
+
+    const [ano, mes, dia] = this.dataFalta.split('-').map(Number);
+    const dataSelecionada = new Date(ano, mes - 1, dia);
+
+    const diaSemana = dataSelecionada.getDay();
+
+    if (diaSemana === 0 || diaSemana === 6) {
+      alert('Selecione apenas dias úteis / letivos (segunda a sexta-feira).');
+      this.dataFalta = '';
+    }
+  }
+
+  private formatarDataIso(data: Date): string {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const dia = String(data.getDate()).padStart(2, '0');
+
+    return `${ano}-${mes}-${dia}`;
+  }
 
   voltarInicio(): void {
     this.router.navigate(['/home']);
@@ -75,6 +72,7 @@ export class Justificativa implements OnInit {
 
   tipoJustificativa = '';
   outraJustificativa = '';
+  descricaoOutro = '';
   observacoes = '';
 
   arquivoSelecionado: File | null = null;
@@ -86,9 +84,11 @@ export class Justificativa implements OnInit {
   selecionarOutro(): void {
     this.mensagemErro = '';
     this.outraJustificativa = '';
+    this.descricaoOutro = '';
   }
 
   adicionarOutraJustificativa(): void {
+
     const justificativa = this.outraJustificativa.trim();
 
     if (!justificativa) {
@@ -97,28 +97,18 @@ export class Justificativa implements OnInit {
       return;
     }
 
-    const jaExiste = this.tiposJustificativa.some(
-      tipo => tipo.toLowerCase() === justificativa.toLowerCase()
-    );
+    // Guarda a descrição digitada
+    this.descricaoOutro = justificativa;
 
-    if (jaExiste) {
-      this.mensagemErro =
-        'Essa justificativa já está cadastrada.';
-      return;
-    }
+    // Mantém o tipo como Outros
+    this.tipoJustificativa = 'Outros';
 
-    this.tiposJustificativa.splice(
-      this.tiposJustificativa.length - 1,
-      0,
-      justificativa
-    );
-
-    this.tipoJustificativa = justificativa;
     this.outraJustificativa = '';
     this.mensagemErro = '';
   }
 
   selecionarArquivo(event: Event): void {
+
     const input = event.target as HTMLInputElement;
 
     if (!input.files || input.files.length === 0) {
@@ -159,7 +149,6 @@ export class Justificativa implements OnInit {
     this.nomeArquivo = '';
   }
 
-  // Converte o arquivo para Base64
   private converterArquivoParaBase64(
     file: File
   ): Promise<string> {
@@ -186,73 +175,75 @@ export class Justificativa implements OnInit {
     this.mensagemErro = '';
     this.mensagemSucesso = '';
 
-    // Verifica o tipo
     if (!this.tipoJustificativa) {
-
       this.mensagemErro =
         'Selecione o tipo de justificativa.';
-
       return;
     }
 
-    // Verifica a data
-    if (!this.dataFalta) {
+    // Verifica se Outros possui descrição
+    if (
+      this.tipoJustificativa === 'Outros' &&
+      !this.descricaoOutro.trim()
+    ) {
+      this.mensagemErro =
+        'Informe qual é a sua justificativa.';
+      return;
+    }
 
+    if (!this.dataFalta) {
       this.mensagemErro =
         'Selecione a data da falta.';
-
       return;
     }
 
-    // Verifica o arquivo
     if (!this.arquivoSelecionado) {
-
       this.mensagemErro =
         'Anexe um documento para continuar.';
-
       return;
     }
 
     try {
 
-      // Converte o arquivo para Base64
       const arquivoBase64 =
         await this.converterArquivoParaBase64(
           this.arquivoSelecionado
         );
 
-      // Salva a justificativa
+      // SALVAR JUSTIFICATIVA
       this.justificativaService.adicionarJustificativa({
 
-        tipoJustificativa:
-          this.tipoJustificativa,
+        tipoJustificativa: this.tipoJustificativa,
 
-        dataFalta:
-          this.dataFalta,
+        // Salva a descrição digitada quando selecionar Outros
+        motivo: this.tipoJustificativa === 'Outros'
+          ? this.descricaoOutro.trim()
+          : this.tipoJustificativa,
 
-        observacoes:
-          this.observacoes,
+        dataFalta: this.dataFalta,
 
-        nomeArquivo:
-          this.nomeArquivo,
+        observacoes: this.observacoes,
 
-        arquivoBase64:
-          arquivoBase64
+        nomeArquivo: this.nomeArquivo,
 
-      });
+        arquivoBase64: arquivoBase64
 
-      // Mensagem de sucesso
+      } as Parameters<
+        JustificativaService['adicionarJustificativa']
+      >[0]);
+
       this.mensagemSucesso =
         'Justificativa enviada com sucesso para a Coordenação!';
 
-      // Limpa os campos
+      // LIMPAR CAMPOS
       this.tipoJustificativa = '';
+      this.outraJustificativa = '';
+      this.descricaoOutro = '';
       this.dataFalta = '';
       this.observacoes = '';
       this.arquivoSelecionado = null;
       this.nomeArquivo = '';
 
-      // Vai automaticamente para Solicitações
       this.router.navigate(['/solicitacoes']);
 
     } catch (error) {

@@ -88,33 +88,24 @@
       <section class="resumo">
 
         <div class="card-resumo pendentes">
-
           <strong class="pendente">
             {{ pendentes }}
           </strong>
-
           <span class="pendente">Pendentes</span>
-
         </div>
 
         <div class="card-resumo aprovados">
-
           <strong class="aprovado">
             {{ aprovados }}
           </strong>
-
           <span class="aprovado">Aprovados</span>
-
         </div>
 
         <div class="card-resumo recusados">
-
           <strong class="reprovado">
             {{ reprovados }}
           </strong>
-
           <span class="reprovado">Reprovados</span>
-
         </div>
 
       </section>
@@ -131,58 +122,83 @@
       </div>
 
       <!-- LISTA DINÂMICA -->
-     <div class="lista-solicitacoes">
+      <div class="lista-solicitacoes">
 
-  @for (solicitacao of ultimasJustificativas; track solicitacao.id) {
+        @for (solicitacao of ultimasJustificativas; track solicitacao.id) {
 
-    <div class="solicitacao">
+          <div class="solicitacao">
 
-      <!-- ÍCONE DO STATUS -->
-      <div class="icone-status"
-        [class.pendente]="solicitacao.status === 'Pendente'"
-        [class.aprovado]="solicitacao.status === 'Aprovado' || solicitacao.status === 'Aprovada'"
-        [class.recusado]="solicitacao.status === 'Reprovado' || solicitacao.status === 'Indeferida'">
+            <!-- ÍCONE DO STATUS -->
+            <div class="icone-status"
+              [class.pendente]="obterStatus(solicitacao.status) === 'Em análise'"
+              [class.aprovado]="obterStatus(solicitacao.status) === 'Aprovado'"
+              [class.recusado]="obterStatus(solicitacao.status) === 'Reprovado'">
 
-        @if (solicitacao.status === 'Pendente') {
-          ◷
-        }
-        @else if (solicitacao.status === 'Aprovado' || solicitacao.status === 'Aprovada') {
-          ✓
-        }
-        @else {
-          ×
+              @if (obterStatus(solicitacao.status) === 'Em análise') {
+                ◷
+              }
+              @else if (obterStatus(solicitacao.status) === 'Aprovado') {
+                ✓
+              }
+              @else {
+                ×
+              }
+
+            </div>
+
+            <!-- INFORMAÇÕES DA SOLICITAÇÃO -->
+            <div class="informacoes">
+
+              <strong>
+                {{ solicitacao.tipo || solicitacao.tipoJustificativa || solicitacao.motivo || 'Justificativa' }}
+              </strong>
+
+              <span>
+                Data: {{ solicitacao.dataEnvio | date:'dd/MM/yyyy' }}
+              </span>
+
+              <span>
+                Status: {{ obterStatus(solicitacao.status) }}
+              </span>
+
+              <!-- MOTIVO DA JUSTIFICATIVA -->
+              <p class="motivo-justificativa">
+
+                Motivo:
+
+                @if (
+                  (solicitacao.tipo || solicitacao.tipoJustificativa || '').trim().toLowerCase() === 'outros'
+                ) {
+                  {{
+                    solicitacao.descricaoOutro ||
+                    solicitacao.descricao ||
+                    solicitacao.detalhes ||
+                    'Descrição não informada'
+                  }}
+                }
+                @else {
+                  {{
+                    solicitacao.motivo ||
+                    solicitacao.tipoJustificativa ||
+                    solicitacao.tipo ||
+                    'Não informado'
+                  }}
+                }
+
+              </p>
+
+            </div>
+
+          </div>
+
+        } @empty {
+
+          <p>Nenhuma solicitação cadastrada.</p>
+
         }
 
       </div>
 
-      <!-- INFORMAÇÕES DA SOLICITAÇÃO -->
-<div class="informacoes">
-
-  <strong>{{ solicitacao.tipo }}</strong>
-
-  <span>
-    Data: {{ solicitacao.dataEnvio | date:'dd/MM/yyyy' }}
-  </span>
-
-  <span>
-    Status: {{ obterStatus(solicitacao.status) }}
-  </span>
-
-  <p class="motivo-justificativa">
-    Motivo: {{ solicitacao.motivo }}
-  </p>
-
-</div>
-
-    </div>
-
-  } @empty {
-
-    <p>Nenhuma solicitação cadastrada.</p>
-
-  }
-
-</div>
     </section>
 
   </main>

@@ -4,6 +4,7 @@ export interface Justificativa {
     
   id: number;
   tipoJustificativa: string;
+  motivo?:string;
   dataFalta: string;
   observacoes?: string;
   nomeArquivo?: string;

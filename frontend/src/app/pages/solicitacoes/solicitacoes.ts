@@ -9,7 +9,7 @@ type FiltroSolicitacoes =
   | 'todas'
   | 'pendentes'
   | 'aprovados'
-  | 'indeferidos'; 
+  | 'indeferidos';
 
 @Component({
   selector: 'app-solicitacoes',
@@ -115,6 +115,18 @@ export class Solicitacoes implements OnInit, OnDestroy {
     return status || 'Em análise';
   }
 
+  // Exibir o motivo correto da justificativa
+  obterMotivo(justificativa: any): string {
+    if (this.normalizarTexto(justificativa.tipoJustificativa) === 'outros') {
+      return justificativa.motivo
+        || justificativa.descricaoOutro
+        || justificativa.outraJustificativa
+        || 'Descriçaõ não informada';
+    }
+
+    return justificativa.tipoJustificativa|| 'Não informado';
+  }
+
   // Selecionar filtro
   selecionarFiltro(filtro: FiltroSolicitacoes): void {
     this.filtroAtivo = filtro;
@@ -162,6 +174,10 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
       const camposPesquisa = [
         justificativa.tipoJustificativa,
+        justificativa.motivo,
+        justificativa.descricaoOutro,
+        justificativa.outraJustificativa,
+        justificativa.observacoes,
         justificativa.status,
         justificativa.dataFalta,
         justificativa.observacaoCoordenacao,
