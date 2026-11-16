@@ -51,6 +51,8 @@ export class Home implements OnInit, OnDestroy {
       .getJustificativas()
       .subscribe({
         next: (dados) => {
+          console.log('Justificativas carregadas, dados');
+
           this.justificativas = dados;
         },
         error: (erro) => {
