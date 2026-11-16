@@ -1,11 +1,4 @@
-import {
-  Component,
-  inject,
-  computed,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
-
+import {Component, inject, computed, OnInit, OnDestroy} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
@@ -52,6 +45,8 @@ export class Home implements OnInit, OnDestroy {
       .subscribe({
         next: (dados) => {
           this.justificativas = dados;
+
+          console.log('DADOS COMPLETOS:', JSON.stringify(dados, null, 2));
         },
         error: (erro) => {
           console.error('Erro ao carregar justificativas:', erro);

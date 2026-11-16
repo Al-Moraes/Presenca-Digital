@@ -170,6 +170,7 @@
                   (solicitacao.tipo || solicitacao.tipoJustificativa || '').trim().toLowerCase() === 'outros'
                 ) {
                   {{
+                    solicitacao.motivo ||
                     solicitacao.descricaoOutro ||
                     solicitacao.descricao ||
                     solicitacao.detalhes ||
