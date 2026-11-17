@@ -69,19 +69,81 @@
   <!-- CONTEÚDO PRINCIPAL -->
   <main class="conteudo">
 
+    <!-- CABEÇALHO COM PERFIL -->
     <header class="topo">
+
       <h1>Seja Bem-Vindo.</h1>
+
+      <!-- ÁREA DO PERFIL -->
+      <div class="area-perfil">
+
+        <!-- BOTÃO DA INICIAL -->
+        <button
+          class="botao-perfil"
+          type="button"
+          (click)="alternarMenu()"
+          aria-label="Abrir menu do perfil"
+          [attr.aria-expanded]="menuPerfilAberto">
+
+          {{ nomeUsuario().charAt(0).toUpperCase() }}
+
+        </button>
+
+        <!-- MENU SUSPENSO -->
+        @if (menuPerfilAberto) {
+
+          <div class="menu-perfil">
+
+            <div class="nome-perfil">
+
+              <strong>{{ nomeUsuario() }}</strong>
+
+              <span>
+                {{ authService.usuarioAtual()?.email }}
+              </span>
+
+            </div>
+
+            <!-- MINHA CONTA -->
+            <button
+              type="button"
+              (click)="abrirPerfil()">
+
+              <span>👤</span>
+              Minha Conta
+
+            </button>
+
+            <!-- SAIR DA CONTA -->
+            <button
+              type="button"
+              class="sair-perfil"
+              (click)="sairDaConta()">
+
+              <span>↪</span>
+              Sair da conta
+
+            </button>
+
+          </div>
+
+        }
+
+      </div>
+
     </header>
 
     <section class="home">
 
       <!-- SAUDAÇÃO -->
       <div class="boas-vindas">
+
         <h2>Olá, {{ nomeUsuario() }}!</h2>
 
         <p>
           veja o resumo das suas justificativas.
         </p>
+
       </div>
 
       <!-- RESUMO DINÂMICO -->

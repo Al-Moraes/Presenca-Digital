@@ -1,0 +1,151 @@
+<div class="perfil-container">
+
+  <header class="perfil-topo">
+    <div>
+      <h1>Minha Conta</h1>
+      <p>Visualize e atualize seus dados pessoais.</p>
+    </div>
+
+    <a routerLink="/home" class="voltar">
+      ← Voltar
+    </a>
+  </header>
+
+  <section class="perfil-card">
+
+    <div class="perfil-identificacao">
+      <div class="avatar">
+        {{ dados.nome.charAt(0).toUpperCase() || 'A' }}
+      </div>
+
+      <div>
+        <h2>{{ dados.nome }}</h2>
+        <p>{{ dados.email }}</p>
+        <span class="etiqueta">Aluno</span>
+      </div>
+    </div>
+
+    <div class="divisor"></div>
+
+    <div class="secao-titulo">
+      <div>
+        <h3>Dados pessoais</h3>
+        <p>Informações da sua conta no sistema.</p>
+      </div>
+
+      @if (!editando) {
+        <button class="botao-editar" (click)="editar()">
+          ✎ Editar dados
+        </button>
+      }
+    </div>
+
+    @if (mensagem) {
+      <div
+        class="mensagem"
+        [class.sucesso]="sucesso"
+        [class.erro]="!sucesso">
+        {{ mensagem }}
+      </div>
+    }
+
+    <form #formPerfil="ngForm" (ngSubmit)="salvar()">
+
+      <div class="campos-grid">
+
+        <div class="campo">
+          <label>Nome completo</label>
+          <input
+            type="text"
+            name="nome"
+            [(ngModel)]="dados.nome"
+            [readonly]="!editando"
+            required>
+        </div>
+
+        <div class="campo">
+          <label>E-mail</label>
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="dados.email"
+            readonly>
+        </div>
+
+        <div class="campo">
+          <label>Registro Acadêmico (RA)</label>
+          <input
+            type="text"
+            name="ra"
+            [(ngModel)]="dados.ra"
+            [readonly]="!editando"
+            required>
+        </div>
+
+        <div class="campo">
+          <label>Telefone</label>
+          <input
+            type="tel"
+            name="telefone"
+            [(ngModel)]="dados.telefone"
+            [readonly]="!editando"
+            required>
+        </div>
+
+        <div class="campo">
+          <label>Data de nascimento</label>
+          <input
+            type="date"
+            name="dataNascimento"
+            [(ngModel)]="dados.dataNascimento"
+            [readonly]="!editando">
+        </div>
+
+        <div class="campo">
+          <label>Curso</label>
+          <input
+            type="text"
+            name="curso"
+            [(ngModel)]="dados.curso"
+            [readonly]="!editando">
+        </div>
+
+        <div class="campo">
+          <label>Turma</label>
+          <input
+            type="text"
+            name="turma"
+            [(ngModel)]="dados.turma"
+            [readonly]="!editando">
+        </div>
+
+      </div>
+
+      @if (editando) {
+        <div class="acoes">
+          <button
+            type="button"
+            class="botao-cancelar"
+            (click)="cancelar()">
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="botao-salvar"
+            [disabled]="formPerfil.invalid">
+            Salvar alterações
+          </button>
+        </div>
+      }
+
+    </form>
+
+  </section>
+
+  <p class="aviso">
+    Mantenha seus dados atualizados para facilitar a comunicação
+    com a coordenação.
+  </p>
+
+</div>
