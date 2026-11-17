@@ -92,4 +92,23 @@ export class JustificativaService {
 
     this.salvarNoStorage(listaAtualizada);
   }
+
+  atualizarJustificativa(id: string, alteracoes: Partial<Justificativa>) {
+  const listaAtualizada = this.justificativasSubject.value.map(item => {
+    if (String(item.id)===String(id)){
+      return {
+        ...item,
+        ...alteracoes,
+        id: item.id,
+        status: item.status,
+        dataEnvio: item.dataEnvio
+      };
+    }
+
+    return item;
+  });
+
+  this.justificativasSubject.next(listaAtualizada);
+  localStorage.setItem('justificativas', JSON.stringify(listaAtualizada));
+}
 }
