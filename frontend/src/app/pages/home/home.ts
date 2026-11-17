@@ -1,4 +1,4 @@
-import {Component, inject, computed, OnInit, OnDestroy} from '@angular/core';
+import { Component, inject, computed, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
@@ -16,12 +16,43 @@ export class Home implements OnInit, OnDestroy {
 
   private authService = inject(AuthService);
 
-  // Conexão com as solicitações
   private solicitacoesService = inject(JustificativaService);
 
   justificativas: any[] = [];
 
   private inscricao?: Subscription;
+
+  // Controle do menu lateral
+  menuPerfilAberto = false;
+
+  // Abrir e fechar o menu
+  alternarMenuPerfil(): void {
+    this.menuPerfilAberto = !this.menuPerfilAberto;
+  }
+
+  //Compartibilidade com o nome antigo
+  alternarMenu(): void{
+    this.alternarMenuPerfil();
+  }
+
+  //Fecha o menu
+  fecharMenu(): void{
+    this.menuPerfilAberto = false;
+  }
+
+  //Abrir Minha Conta
+  abrirPerfil(): void{
+    this.fecharMenu();
+
+  //Aguardado definição da rota Minha Conta
+  }
+
+  //Sair da Conta
+  sairDaConta(): void{
+    this.fecharMenu();
+  }
+
+
 
   // Nome do usuário logado
   nomeUsuario = computed(() => {
@@ -107,12 +138,12 @@ export class Home implements OnInit, OnDestroy {
   }
 
   // Mostrar as três últimas justificativas
-get ultimasJustificativas(): any[] {
-  return [...this.justificativas]
-    .sort((a, b) =>
-      new Date(b.dataEnvio).getTime() -
-      new Date(a.dataEnvio).getTime()
-    )
-    .slice(0, 3);
-}
+  get ultimasJustificativas(): any[] {
+    return [...this.justificativas]
+      .sort((a, b) =>
+        new Date(b.dataEnvio).getTime() -
+        new Date(a.dataEnvio).getTime()
+      )
+      .slice(0, 3);
+  }
 }
