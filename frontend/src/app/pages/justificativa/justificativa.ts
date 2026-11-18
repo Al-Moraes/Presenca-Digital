@@ -221,17 +221,29 @@ if (this.justificativaEmEdicao) {
     }
 
     try {
+let arquivoBase64 = this.arquivoBase64Atual;
 
-      const dados = {
+if (this.arquivoSelecionado) {
+  arquivoBase64 = await this.converterArquivoParaBase64(
+    this.arquivoSelecionado
+  );
+}
+
+const dados = {
   tipoJustificativa: this.tipoJustificativa,
+
+  motivo: this.tipoJustificativa === 'Outros'
+    ? this.descricaoOutro.trim()
+    : this.tipoJustificativa,
+
   dataFalta: this.dataFalta,
   observacoes: this.observacoes,
+
   nomeArquivo: this.arquivoSelecionado
     ? this.arquivoSelecionado.name
     : this.nomeArquivo,
-  arquivoBase64: this.arquivoSelecionado
-    ? this.arquivoBase64Atual
-    : this.arquivoBase64Atual,
+
+  arquivoBase64: arquivoBase64,
   descricaoOutro: this.descricaoOutro
 };
 
@@ -245,7 +257,7 @@ if (this.justificativaEmEdicao) {
 }
 
       // SALVAR JUSTIFICATIVA
-      this.justificativaService.adicionarJustificativa({
+     ({
 
         tipoJustificativa: this.tipoJustificativa,
 

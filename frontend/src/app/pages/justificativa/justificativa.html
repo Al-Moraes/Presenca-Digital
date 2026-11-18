@@ -159,7 +159,7 @@
           <label for="arquivo">Documento</label>
 
           <div class="area-upload"
-               [class.arquivo-adicionado]="arquivoSelecionado">
+               [class.arquivo-adicionado]="arquivoSelecionado || arquivoBase64Atual">
 
             <input
               #arquivoInput
@@ -195,6 +195,7 @@
                 </div>
 
                 <button
+                *ngIf="arquivoSelecionado"
                   type="button"
                   class="btn-remover"
                   (click)="removerArquivo()"
