@@ -84,6 +84,7 @@
       </div>
 
       <!-- FORMULÁRIO -->
+
       <div class="conteudo">
 
         <div class="campo">
@@ -158,7 +159,7 @@
           <label for="arquivo">Documento</label>
 
           <div class="area-upload"
-               [class.arquivo-adicionado]="arquivoSelecionado">
+               [class.arquivo-adicionado]="arquivoSelecionado || arquivoBase64Atual">
 
             <input
               #arquivoInput
@@ -168,7 +169,7 @@
               (change)="selecionarArquivo($event)"
               hidden>
 
-            <ng-container *ngIf="!arquivoSelecionado">
+            <ng-container *ngIf="!arquivoSelecionado && !arquivoBase64Atual">
               <div class="icone-upload">📄</div>
 
               <p>Clique para anexar ou arraste o arquivo aqui</p>
@@ -182,18 +183,24 @@
               </button>
             </ng-container>
 
-            <ng-container *ngIf="arquivoSelecionado">
+            <ng-container *ngIf="arquivoSelecionado || arquivoBase64Atual">
               <div class="arquivo-info">
                 <div class="icone-arquivo">📎</div>
 
                 <div class="dados-arquivo">
                   <strong>{{ nomeArquivo }}</strong>
                   <span>
-                    {{ (arquivoSelecionado.size / 1024 / 1024).toFixed(2) }} MB
+                   {{ arquivoSelecionado ? (arquivoSelecionado.size / 1024 / 1024).toFixed(2) : '0.00' }} MB
                   </span>
                 </div>
+                
+                <button
+                 type="button"
+                   class="btn-anexar"
+                   (click)="arquivoInput.click()">Trocar documento</button>
 
                 <button
+                *ngIf="arquivoSelecionado"
                   type="button"
                   class="btn-remover"
                   (click)="removerArquivo()"

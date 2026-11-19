@@ -17,6 +17,9 @@ export class Justificativa implements OnInit {
   minData: string = '';
   maxData: string = '';
 
+  justificativaEmEdicao:any = null;
+  arquivoBase64Atual='';
+
   constructor(
     private router: Router,
     private justificativaService: JustificativaService
@@ -31,6 +34,20 @@ export class Justificativa implements OnInit {
     limitePassado.setDate(hoje.getDate() - 14);
 
     this.minData = this.formatarDataIso(limitePassado);
+
+    this.justificativaEmEdicao = history.state?.justificativaEditar;
+
+if (this.justificativaEmEdicao) {
+  const j = this.justificativaEmEdicao;
+
+  this.tipoJustificativa = j.tipoJustificativa;
+  this.dataFalta = j.dataFalta?.substring(0, 10);
+  this.observacoes = j.observacoes;
+  this.nomeArquivo = j.nomeArquivo;
+  this.arquivoBase64Atual = j.arquivoBase64 ||'';
+  this.descricaoOutro = j.descricaoOutro || '';
+}
+
   }
 
   validarData(): void {
@@ -197,21 +214,50 @@ export class Justificativa implements OnInit {
       return;
     }
 
-    if (!this.arquivoSelecionado) {
+    if (!this.arquivoSelecionado && !this.arquivoBase64Atual) {
       this.mensagemErro =
         'Anexe um documento para continuar.';
       return;
     }
 
     try {
+let arquivoBase64 = this.arquivoBase64Atual;
 
-      const arquivoBase64 =
-        await this.converterArquivoParaBase64(
-          this.arquivoSelecionado
-        );
+if (this.arquivoSelecionado) {
+  arquivoBase64 = await this.converterArquivoParaBase64(
+    this.arquivoSelecionado
+  );
+}
+
+const dados = {
+  tipoJustificativa: this.tipoJustificativa,
+
+  motivo: this.tipoJustificativa === 'Outros'
+    ? this.descricaoOutro.trim()
+    : this.tipoJustificativa,
+
+  dataFalta: this.dataFalta,
+  observacoes: this.observacoes,
+
+  nomeArquivo: this.arquivoSelecionado
+    ? this.arquivoSelecionado.name
+    : this.nomeArquivo,
+
+  arquivoBase64: arquivoBase64,
+  descricaoOutro: this.descricaoOutro
+};
+
+if (this.justificativaEmEdicao) {
+  this.justificativaService.atualizarJustificativa(
+    this.justificativaEmEdicao.id,
+    dados
+  );
+} else {
+  this.justificativaService.adicionarJustificativa(dados);
+}
 
       // SALVAR JUSTIFICATIVA
-      this.justificativaService.adicionarJustificativa({
+     ({
 
         tipoJustificativa: this.tipoJustificativa,
 
@@ -226,7 +272,7 @@ export class Justificativa implements OnInit {
 
         nomeArquivo: this.nomeArquivo,
 
-        arquivoBase64: arquivoBase64
+        arquivoBase64: this.arquivoBase64Atual
 
       } as Parameters<
         JustificativaService['adicionarJustificativa']
