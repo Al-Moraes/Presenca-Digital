@@ -193,6 +193,11 @@
                    {{ arquivoSelecionado ? (arquivoSelecionado.size / 1024 / 1024).toFixed(2) : '0.00' }} MB
                   </span>
                 </div>
+                
+                <button
+                 type="button"
+                   class="btn-anexar"
+                   (click)="arquivoInput.click()">Trocar documento</button>
 
                 <button
                 *ngIf="arquivoSelecionado"

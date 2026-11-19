@@ -44,7 +44,7 @@ if (this.justificativaEmEdicao) {
   this.dataFalta = j.dataFalta?.substring(0, 10);
   this.observacoes = j.observacoes;
   this.nomeArquivo = j.nomeArquivo;
-  this.arquivoBase64Atual = j.arquivoBase64;
+  this.arquivoBase64Atual = j.arquivoBase64 ||'';
   this.descricaoOutro = j.descricaoOutro || '';
 }
 
