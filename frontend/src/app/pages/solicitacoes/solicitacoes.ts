@@ -289,6 +289,12 @@ export class Solicitacoes implements OnInit, OnDestroy {
 
   // Editar justificativa
   editarJustificativa(justificativa: any): void {
+
+   if (this.obterStatus(justificativa.status) !== 'Em análise') {
+      alert('Não é possível editar uma justificativa aprovada ou indeferida.');
+    
+   return;
+  }
     this.router.navigate(
       ['/justificativa'],
       {

@@ -189,6 +189,7 @@
 
         <div class="card-actions">
           <button
+          *ngIf="obterStatus(justificativa.status) === 'Em análise'"
             class="btn-icon edit"
             type="button"
             title="Editar justificativa"
