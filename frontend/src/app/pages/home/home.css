@@ -1,6 +1,6 @@
 /* ==========================================
    PRESENÇA DIGITAL - TELA HOME
-   LAYOUT COMPACTO
+   LAYOUT LEVEMENTE COMPACTO
 ========================================== */
 
 * {
@@ -21,11 +21,11 @@
 ========================================== */
 
 .sidebar {
-  width: 245px;
-  min-width: 245px;
+  width: 230px;
+  min-width: 230px;
   height: 100vh;
   background: #ffffff;
-  padding: 22px 16px;
+  padding: 20px 14px;
   display: flex;
   flex-direction: column;
   border-right: 1px solid #e8edf3;
@@ -38,11 +38,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
 }
 
 .logo-placeholder {
-  width: 165px;
+  width: 155px;
   max-width: 100%;
   height: auto;
   object-fit: contain;
@@ -53,18 +53,18 @@
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 12px;
+  gap: 11px;
+  padding: 11px 10px;
   border-radius: 7px;
   color: #64748b;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 15px;
   transition: 0.2s;
 }
 
@@ -81,9 +81,9 @@
 
 .icone,
 .nav-icon {
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
+  width: 19px;
+  height: 19px;
+  min-width: 19px;
 }
 
 .sidebar-footer {
@@ -95,10 +95,10 @@
 ========================================== */
 
 .conteudo {
-  margin-left: 245px;
-  width: calc(100% - 245px);
+  margin-left: 230px;
+  width: calc(100% - 230px);
   min-height: 100vh;
-  padding: 30px 42px;
+  padding: 27px 36px;
 }
 
 /* ==========================================
@@ -115,7 +115,7 @@
 }
 
 .topo h1 {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 600;
   color: #1e293b;
   margin: 0;
@@ -133,14 +133,14 @@
 }
 
 .botao-perfil {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
   border: none;
   border-radius: 50%;
   background: #405cff;
   color: #ffffff;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -155,14 +155,14 @@
 
 .menu-perfil {
   position: absolute;
-  top: 43px;
+  top: 46px;
   right: 0;
-  width: 200px;
+  width: 215px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 9px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.10);
-  padding: 5px;
+  padding: 7px;
   z-index: 1000;
   animation: aparecerMenu 0.2s ease;
 }
@@ -189,25 +189,25 @@
 .nome-perfil strong {
   display: block;
   color: #1e293b;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .nome-perfil span {
   display: block;
   color: #64748b;
-  font-size: 10px;
-  margin-top: 3px;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
 .menu-perfil button {
   width: 100%;
-  padding: 9px;
+  padding: 10px;
   border: none;
   background: transparent;
   text-align: left;
   border-radius: 6px;
   color: #334155;
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
 }
 
@@ -232,18 +232,18 @@
 /* Saudação */
 
 .boas-vindas {
-  margin-bottom: 23px;
+  margin-bottom: 25px;
 }
 
 .boas-vindas h2 {
-  font-size: 19px;
+  font-size: 23px;
   color: #1e293b;
   font-weight: 600;
-  margin: 0 0 6px;
+  margin: 0 0 7px;
 }
 
 .boas-vindas p {
-  font-size: 13px;
+  font-size: 15px;
   color: #64748b;
   margin: 0;
 }
@@ -255,65 +255,65 @@
 .resumo {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 17px;
-  margin-bottom: 32px;
+  gap: 15px;
+  margin-bottom: 30px;
 }
 
 .card-resumo {
   background: #ffffff;
   border: 1px solid #e8edf3;
-  border-radius: 9px;
-  padding: 17px 20px;
-  min-height: 90px;
+  border-radius: 10px;
+  padding: 18px 20px;
+  min-height: 98px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 6px;
+  gap: 7px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
 }
 
 .card-resumo strong {
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 700;
 }
 
 .card-resumo span {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
 }
 
 /* ==========================================
-   CORES DOS CARDS DE RESUMO
+   CORES DOS CARDS
 ========================================== */
 
-/* Todos com fundo branco */
-
-.card-resumo.pendentes,
-.card-resumo.aprovados,
-.card-resumo.recusados {
-  background: #ffffff;
-  border: 1px solid #e8edf3;
+.card-resumo.pendentes {
+  background: #fff5e5;
+  border: 1px solid #ffebc7;
 }
-
-/* Pendentes - Laranja */
 
 .card-resumo.pendentes strong,
 .card-resumo.pendentes span {
   color: #e69a32;
 }
 
-/* Aprovados - Verde */
+.card-resumo.aprovados {
+  background: #e5f5e9;
+  border: 1px solid #c9ebd3;
+}
 
 .card-resumo.aprovados strong,
 .card-resumo.aprovados span {
-  color: #16a36a;
+  color: #168b48;
 }
 
-/* Reprovados - Vermelho */
+.card-resumo.recusados {
+  background: #fce9e9;
+  border: 1px solid #f5d0d0;
+}
 
 .card-resumo.recusados strong,
 .card-resumo.recusados span {
-  color: #e05252;
+  color: #d94b4b;
 }
 
 /* Cores dos textos de status */
@@ -338,18 +338,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .titulo-solicitacoes h2 {
-  font-size: 17px;
+  font-size: 21px;
   font-weight: 600;
   color: #1e293b;
   margin: 0;
 }
 
 .titulo-solicitacoes a {
-  font-size: 12px;
+  font-size: 14px;
   color: #405cff;
   text-decoration: none;
   font-weight: 500;
@@ -372,23 +372,23 @@
 .solicitacao {
   background: #ffffff;
   border: 1px solid #e8edf3;
-  border-radius: 9px;
-  padding: 15px 17px;
+  border-radius: 10px;
+  padding: 17px 18px;
   display: flex;
   align-items: flex-start;
-  gap: 13px;
+  gap: 14px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
 }
 
 .icone-status {
-  width: 30px;
-  height: 30px;
-  min-width: 30px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
 }
 
@@ -410,31 +410,31 @@
 .informacoes {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   min-width: 0;
 }
 
 .informacoes strong {
-  font-size: 13px;
+  font-size: 16px;
   color: #1e293b;
   font-weight: 600;
 }
 
 .informacoes span {
-  font-size: 11px;
+  font-size: 14px;
   color: #64748b;
 }
 
 .motivo-justificativa {
-  font-size: 11px;
+  font-size: 14px;
   color: #64748b;
-  margin: 4px 0 0;
-  line-height: 1.5;
+  margin: 5px 0 0;
+  line-height: 1.6;
   overflow-wrap: anywhere;
 }
 
 .lista-solicitacoes > p {
-  font-size: 13px;
+  font-size: 15px;
   color: #64748b;
   padding: 18px;
   background: #ffffff;
@@ -448,25 +448,37 @@
 @media (max-width: 900px) {
 
   .sidebar {
-    width: 200px;
-    min-width: 200px;
-    padding: 18px 12px;
+    width: 195px;
+    min-width: 195px;
+    padding: 17px 11px;
   }
 
   .logo-placeholder {
-    width: 145px;
+    width: 140px;
   }
 
   .conteudo {
-    margin-left: 200px;
-    width: calc(100% - 200px);
-    padding: 25px;
+    margin-left: 195px;
+    width: calc(100% - 195px);
+    padding: 23px;
   }
 
   .resumo {
     gap: 10px;
   }
+
+  .card-resumo strong {
+    font-size: 27px;
+  }
+
+  .card-resumo span {
+    font-size: 14px;
+  }
 }
+
+/* ==========================================
+   CELULAR
+========================================== */
 
 @media (max-width: 600px) {
 
@@ -496,37 +508,61 @@
   .conteudo {
     margin-left: 65px;
     width: calc(100% - 65px);
-    padding: 20px 13px;
+    padding: 18px 12px;
   }
 
   .topo h1 {
-    font-size: 19px;
+    font-size: 23px;
   }
 
   .boas-vindas h2 {
-    font-size: 17px;
+    font-size: 20px;
+  }
+
+  .boas-vindas p {
+    font-size: 14px;
   }
 
   .resumo {
     grid-template-columns: 1fr;
-    gap: 9px;
-    margin-bottom: 25px;
+    gap: 10px;
+    margin-bottom: 23px;
   }
 
   .card-resumo {
-    min-height: 70px;
-    padding: 12px 15px;
+    min-height: 82px;
+    padding: 14px 17px;
   }
 
   .card-resumo strong {
-    font-size: 21px;
+    font-size: 26px;
+  }
+
+  .card-resumo span {
+    font-size: 14px;
   }
 
   .titulo-solicitacoes h2 {
-    font-size: 15px;
+    font-size: 18px;
+  }
+
+  .titulo-solicitacoes a {
+    font-size: 13px;
   }
 
   .solicitacao {
-    padding: 12px;
+    padding: 13px;
+  }
+
+  .informacoes strong {
+    font-size: 15px;
+  }
+
+  .informacoes span {
+    font-size: 13px;
+  }
+
+  .motivo-justificativa {
+    font-size: 13px;
   }
 }
